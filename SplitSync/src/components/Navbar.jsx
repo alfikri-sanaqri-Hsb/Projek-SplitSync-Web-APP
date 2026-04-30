@@ -27,7 +27,6 @@ export default function Navbar() {
         <div className="flex items-center gap-5">
           <GooeyNav items={items} />
           <div className="flex items-center gap-3">
-            {/* Icon Moon tetap ada sebagai hiasan/UI, tapi tanpa fungsi dark mode dulu */}
             <Moon className="cursor-pointer hover:text-yellow-300 transition" />
             <Settings className="cursor-pointer hover:text-yellow-300 transition" />
           </div>
