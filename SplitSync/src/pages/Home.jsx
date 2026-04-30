@@ -6,8 +6,8 @@ export default function Home() {
     <MainLayout>
       <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
 
-      <Card title="Saldo">
-        <p>Rp 1.000.000</p>
+      <Card title="SplitSync">
+        <p>Welcome to SplitSync</p>
       </Card>
 
     </MainLayout>
