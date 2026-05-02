@@ -1,36 +1,83 @@
 import GooeyNav from "@/components/GooeyNav";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.png";
-import { Moon, Settings } from "lucide-react";
+import { Moon, Sun, Settings } from "lucide-react";
+import { useDarkMode } from "@/hooks/DarkMode"; // 🔥 pakai custom hook
 
 export default function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const items =
-    location.pathname === "/login"
-      ? [
-          { label: "Home", link: "/" },
-          { label: "Login", link: "/login" },
-        ]
-      : [{ label: "Login", link: "/login" }];
+  const { isDarkMode, setIsDarkMode } = useDarkMode();
+
+  const isLoginPage = location.pathname === "/login";
+  const isDesktopPage = location.pathname === "/desktop";
+
+  let items = [];
+
+  if (isLoginPage) {
+    items = [
+      { label: "Home", link: "/" },
+      { label: "Login", link: "/login" },
+    ];
+  } else if (isDesktopPage) {
+    items = [
+      { label: "Desktop", link: "/desktop" },
+      { label: "History", link: "/history" },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        },
+      },
+    ];
+  } else {
+    items = [{ label: "Login", link: "/login" }];
+  }
 
   return (
-    <nav className="bg-teal-400 shadow-lg text-white px-3 py-2.5">
-      <div className="flex justify-between items-center"> 
+    <nav className="bg-teal-400 dark:bg-gray-900 text-white px-4 py-2 shadow-md">
+      <div className="flex justify-between items-center">
+
+        {/* 🔹 KIRI: Logo */}
         <div className="flex items-center gap-3">
           <img
             src={Logo}
             alt="logo"
-            className="w-10 h-10 rounded-full object-cover border-2 border-white"/>
+            className="w-10 h-10 rounded-full object-cover border-2 border-white"
+          />
           <h2 className="font-bold text-lg">SplitSync</h2>
         </div>
+
+        {/* 🔹 KANAN: Menu + Icon */}
         <div className="flex items-center gap-5">
+
+          {/* Menu */}
           <GooeyNav items={items} />
+
+          {/* Icon */}
           <div className="flex items-center gap-3">
-            <Moon className="cursor-pointer hover:text-yellow-300 transition" />
+
+            {/* 🌙 DARK MODE */}
+            {isDarkMode ? (
+              <Sun
+                className="cursor-pointer hover:text-yellow-300 transition"
+                onClick={() => setIsDarkMode(false)}
+              />
+            ) : (
+              <Moon
+                className="cursor-pointer hover:text-yellow-300 transition"
+                onClick={() => setIsDarkMode(true)}
+              />
+            )}
+
+            {/* ⚙️ SETTINGS */}
             <Settings className="cursor-pointer hover:text-yellow-300 transition" />
+
           </div>
         </div>
+
       </div>
     </nav>
   );
