@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 // 🔹 Create Context
 const DarkModeContext = createContext();
 
-// 🔹 Custom Hook (biar gampang dipakai)
+// 🔹 Custom Hook
 export const useDarkMode = () => {
   return useContext(DarkModeContext);
 };
@@ -11,18 +11,14 @@ export const useDarkMode = () => {
 // 🔹 Provider
 export default function DarkModeContextProvider({ children }) {
 
-  // ✅ Ambil dari localStorage (default: light)
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
 
-  // ✅ Apply ke <html> + simpan ke localStorage
   useEffect(() => {
     const root = document.documentElement;
-
     root.classList.toggle("dark", isDarkMode);
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-
   }, [isDarkMode]);
 
   return (

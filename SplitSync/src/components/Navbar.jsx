@@ -40,7 +40,6 @@ export default function Navbar() {
     <nav className="bg-teal-400 dark:bg-gray-900 text-white px-4 py-2 shadow-md">
       <div className="flex justify-between items-center">
 
-        {/* 🔹 KIRI: Logo */}
         <div className="flex items-center gap-3">
           <img
             src={Logo}
@@ -50,16 +49,10 @@ export default function Navbar() {
           <h2 className="font-bold text-lg">SplitSync</h2>
         </div>
 
-        {/* 🔹 KANAN: Menu + Icon */}
         <div className="flex items-center gap-5">
-
-          {/* Menu */}
           <GooeyNav items={items} />
-
-          {/* Icon */}
           <div className="flex items-center gap-3">
 
-            {/* 🌙 DARK MODE */}
             {isDarkMode ? (
               <Sun
                 className="cursor-pointer hover:text-yellow-300 transition"
@@ -72,7 +65,6 @@ export default function Navbar() {
               />
             )}
 
-            {/* ⚙️ SETTINGS */}
             <Settings className="cursor-pointer hover:text-yellow-300 transition" />
 
           </div>

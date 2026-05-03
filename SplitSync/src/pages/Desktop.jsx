@@ -6,7 +6,6 @@ export default function Desktop() {
     <MainLayout>
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
-      {/* CARD SALDO */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card title="Saldo">
           <p className="text-xl font-semibold text-green-600">
