@@ -7,17 +7,5 @@ export default function useNavigation() {
     navigate(path);
   };
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
-  const goHome = () => {
-    navigate("/");
-  };
-
-  return {
-    goTo,
-    goBack,
-    goHome,
-  };
+  return { goTo };
 }

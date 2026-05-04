@@ -1,11 +1,14 @@
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar"; 
+import Footer from "@/components/footer"; 
 
 export default function MainLayout({ children }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-white transition-all duration-300">
-      <div className="p-4">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-800">
+      <Navbar />
+      <main className="flex-1 w-full">
         {children}
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }

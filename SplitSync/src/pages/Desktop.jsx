@@ -1,29 +1,41 @@
 import MainLayout from "@/layout/MainLayout";
-import Card from "@/components/Card";
+import ActionButton from "@/components/ActionButton";
+import ContinueSession from "@/components/ContinueSession";
+import { Users, Link as LinkIcon } from "lucide-react";
 
 export default function Desktop() {
+  const handleHost = () => console.log("Starting as Host...");
+  const handleJoin = () => console.log("Joining via Link...");
+  const handleView = () => console.log("Viewing history...");
+
   return (
     <MainLayout>
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card title="Saldo">
-          <p className="text-xl font-semibold text-green-600">
-            Rp 1.000.000
+      <div className="min-h-[80vh] flex flex-col items-center justify-center px-4 py-12">
+        
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+            Start Your Split Session
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-400">
+            Choose how you want to begin splitting your bill
           </p>
-        </Card>
+        </div>
 
-        <Card title="Pengeluaran">
-          <p className="text-xl font-semibold text-red-500">
-            Rp 300.000
-          </p>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mb-8">
+          <ActionButton 
+            title="Start As Host" 
+            icon={Users} 
+            onClick={handleHost} 
+          />
+          <ActionButton 
+            title="Join Via Link" 
+            icon={LinkIcon} 
+            onClick={handleJoin} 
+          />
+        </div>
 
-        <Card title="Pemasukan">
-          <p className="text-xl font-semibold text-blue-500">
-            Rp 1.300.000
-          </p>
-        </Card>
+        <ContinueSession onSecondaryClick={handleView} />
+
       </div>
     </MainLayout>
   );

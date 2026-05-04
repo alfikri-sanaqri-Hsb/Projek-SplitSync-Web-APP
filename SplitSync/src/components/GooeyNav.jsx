@@ -65,7 +65,6 @@ const GooeyNav = ({
           try {
             element.removeChild(particle);
           } catch {
-            // do nothing
           }
         }, t);
       }, 30);
@@ -92,7 +91,11 @@ const GooeyNav = ({
     updateEffectPosition(liEl);
     if (filterRef.current) {
       const particles = filterRef.current.querySelectorAll('.particle');
-      particles.forEach(p => filterRef.current.removeChild(p));
+      particles.forEach(p => {
+      if (filterRef.current?.contains(p)) {
+        filterRef.current.removeChild(p);
+      }
+    });
     }
     if (textRef.current) {
       textRef.current.classList.remove('active');
@@ -131,7 +134,6 @@ const GooeyNav = ({
 
   return (
     <>
-      {/* This effect is quite difficult to recreate faithfully using Tailwind, so a style tag is a necessary workaround */}
       <style>
         {`
           :root {
@@ -284,27 +286,25 @@ const GooeyNav = ({
             {items.map((item, index) => (
               <li
                 key={index}
-                className={`rounded-full relative cursor-pointer transition-[background-color_color_box-shadow] duration-300 ease shadow-[0_0_0.5px_1.5px_transparent] text-white ${
+                className={`rounded-full relative cursor-pointer transition-all duration-300 ease text-white ${
                   activeIndex === index ? 'active' : ''
-                }`}>
-                <a
+                }`}
+              >
+                <button
                   onClick={(e) => {
-                    e.preventDefault(); // mencecegah reload
-
-                    handleClick(e, index);
+                    handleClick({ currentTarget: e.currentTarget.parentElement }, index);
 
                     if (item.onClick) {
-                      item.onClick(); // logout
+                      item.onClick();
                     } else if (item.link) {
-                      goTo(item.link); // navigasi React
+                      goTo(item.link);
                     }
                   }}
-                  href={item.link || "#"}
-                  onKeyDown={e => handleKeyDown(e, index)}
-                  className="outline-none py-[0.6em] px-[1em] inline-block"
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  className="outline-none py-[0.6em] px-[1em]"
                 >
                   {item.label}
-                </a>
+                </button>
               </li>
             ))}
           </ul>

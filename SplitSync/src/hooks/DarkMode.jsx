@@ -1,14 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-// 🔹 Create Context
 const DarkModeContext = createContext();
-
-// 🔹 Custom Hook
 export const useDarkMode = () => {
   return useContext(DarkModeContext);
 };
-
-// 🔹 Provider
 export default function DarkModeContextProvider({ children }) {
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
