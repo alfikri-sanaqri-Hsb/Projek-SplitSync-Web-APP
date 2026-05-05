@@ -47,7 +47,7 @@ export default function Footer() {
 
       <div className="border-t border-gray-300 dark:border-gray-700">
         <p className="text-center text-sm text-teal-500 py-4">
-          © 2026 SplitSync
+          © 2026 SplitSync. All rights reserved.
         </p>
       </div>
     </footer>

@@ -21,7 +21,7 @@ export default function Hero() {
           <img
             src={Illustration}
             alt="SplitSync Illustration"
-            className="w-full max-w-xs md:max-w-md max-h-[400px] object-contain"
+            className="w-full max-w-xs md:max-w-md max-h-[400px] object-contain rounded-[10px]"
           />
         </div>
       </div>
