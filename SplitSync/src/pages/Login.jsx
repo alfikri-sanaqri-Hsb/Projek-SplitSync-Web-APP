@@ -12,8 +12,7 @@ export default function Login() {
             <img
               src={Logo}
               alt="logo"
-              className="w-14 h-14 rounded-xl border-blue-500 border-white shadow-md"
-            />
+              className="w-14 h-14 rounded-xl border-blue-500 border-white shadow-md"/>
           </div>
 
           <h2 className="text-black dark:text-white text-2xl font-bold mb-2 text-center">
@@ -32,8 +31,7 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="Masukkan email"
-                className="w-full outline-none text-gray-700 bg-transparent"
-              />
+                className="w-full outline-none text-gray-700 bg-transparent"/>
             </div>
           </div>
 
@@ -46,8 +44,7 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="Masukkan password"
-                className="w-full outline-none text-gray-700 bg-transparent"
-              />
+                className="w-full outline-none text-gray-700 bg-transparent"/>
             </div>
 
           </div>

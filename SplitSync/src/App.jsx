@@ -6,6 +6,7 @@ import History from "@/pages/History";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Demo from "@/pages/Demo";
 import NotFound from "@/pages/NotFound";
+import Settings from "@/pages/Settings";
 
 function App() {
   return (
@@ -20,11 +21,9 @@ function App() {
         <Route
           path="/history"
           element={
-            <ProtectedRoute>
-              <History />
-            </ProtectedRoute>
-          }
-        />
+              <History />} />
+
+        <Route path="/settings" element={<Settings />} />     
 
         <Route path="*" element={<NotFound />} />
 

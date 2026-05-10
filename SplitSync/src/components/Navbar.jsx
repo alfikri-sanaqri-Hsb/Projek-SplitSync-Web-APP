@@ -10,7 +10,9 @@ export default function Navbar() {
   const { isDarkMode, setIsDarkMode } = useDarkMode();
 
   const isLoginPage = location.pathname === "/login";
+  const isSettingsPage = location.pathname === "/settings";
   const isDesktopPage = location.pathname === "/desktop";
+  const isHistoryPage = location.pathname === "/history";
 
   let items = [];
 
@@ -19,7 +21,24 @@ export default function Navbar() {
       { label: "Home", onClick: () => navigate("/") },
       { label: "Login", onClick: () => navigate("/login") },
     ];
+  } else if (isSettingsPage) {
+    items = [
+      { label: "Home", onClick: () => navigate("/") },
+      { label: "Login", onClick: () => navigate("/login") },
+    ];
   } else if (isDesktopPage) {
+    items = [
+      { label: "Desktop", onClick: () => navigate("/desktop") },
+      { label: "History", onClick: () => navigate("/history") },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        },
+      },
+    ];
+  }else if (isHistoryPage) {
     items = [
       { label: "Desktop", onClick: () => navigate("/desktop") },
       { label: "History", onClick: () => navigate("/history") },
@@ -37,13 +56,16 @@ export default function Navbar() {
     ];
   }
 
-
   return (
-    <nav className="sticky top-0 bg-white -400 dark:bg-gray-900 text-black dark:text-white shadow-lg w-full overflow-hidden">
+    <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 text-black dark:text-white shadow-lg w-full overflow-hidden">
       <div className="mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
-        
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
-          <img src={Logo} alt="logo" className="w-10 h-10 rounded-xl border-blue-500 border-white" />
+        <div 
+          className="flex items-center gap-3 cursor-pointer" 
+          onClick={() => navigate("/")}>
+          <img 
+            src={Logo} 
+            alt="logo" 
+            className="w-10 h-10 rounded-xl border-2 border-blue-500 object-cover" />
           <h2 className="font-bold text-lg">SplitSync</h2>
         </div>
 
@@ -51,11 +73,22 @@ export default function Navbar() {
           <GooeyNav items={items} />
           <div className="flex items-center gap-3">
             {isDarkMode ? (
-              <Sun size={20} className="cursor-pointer" onClick={() => setIsDarkMode(false)} />
+              <Sun 
+                size={20} 
+                className="cursor-pointer hover:text-yellow-400 transition-colors" 
+                onClick={() => setIsDarkMode(false)} />
             ) : (
-              <Moon size={20} className="cursor-pointer" onClick={() => setIsDarkMode(true)} />
+              <Moon 
+                size={20} 
+                className="cursor-pointer hover:text-blue-500 transition-colors" 
+                onClick={() => setIsDarkMode(true)} />
             )}
-            <Settings size={20} className="cursor-pointer" />
+            
+            <Settings 
+              size={20} 
+              className="cursor-pointer hover:rotate-90 transition-transform duration-300" 
+              onClick={() => navigate("/settings")} 
+            />
           </div>
         </div>
 

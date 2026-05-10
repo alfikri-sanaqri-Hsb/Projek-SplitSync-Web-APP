@@ -1,3 +1,8 @@
-export default function History() {
-  return <h1>History Page</h1>;
+import MainLayout from "@/layout/MainLayout";
+export default function Login() {
+  return (
+    <MainLayout>
+      <div>History</div>
+    </MainLayout>
+  );
 }
