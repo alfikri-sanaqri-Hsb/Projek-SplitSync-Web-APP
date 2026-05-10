@@ -1,7 +1,9 @@
 import React from "react";
 import { UserPlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function StartAsHostCard({ onClick }) {
+  const navigate = useNavigate();
   return (
     <div className="flex-1 bg-white dark:bg-gray-950 border-2 border-gray-100 hover:border-indigo-600 dark:border-gray-800 rounded-[24px] p-8 flex flex-col items-center text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all hover:shadow-md hover:translate-y-[-4px]">
       <div className="w-16 h-16 bg-indigo-50 dark:bg-indigo-900/30 rounded-full flex items-center justify-center mb-6">
@@ -16,7 +18,7 @@ export default function StartAsHostCard({ onClick }) {
       </p>
 
       <button
-        onClick={onClick}
+        onClick={() => navigate("/startashost")}
         className="w-full bg-gray-50 dark:bg-gray-800 hover:bg-blue-600 dark:hover:bg-gray-700 text-gray-700 hover:text-white dark:text-gray-200 font-bold py-3.5 rounded-xl border border-gray-200 dark:border-gray-700 transition-all active:scale-95">
         Start as Host
       </button>

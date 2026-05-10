@@ -13,6 +13,7 @@ export default function Navbar() {
   const isSettingsPage = location.pathname === "/settings";
   const isDesktopPage = location.pathname === "/desktop";
   const isHistoryPage = location.pathname === "/history";
+  const isStartPage = location.pathname === "/startashost";
 
   let items = [];
 
@@ -27,6 +28,18 @@ export default function Navbar() {
       { label: "Login", onClick: () => navigate("/login") },
     ];
   } else if (isDesktopPage) {
+    items = [
+      { label: "Desktop", onClick: () => navigate("/desktop") },
+      { label: "History", onClick: () => navigate("/history") },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        },
+      },
+    ];
+  } else if (isStartPage) {
     items = [
       { label: "Desktop", onClick: () => navigate("/desktop") },
       { label: "History", onClick: () => navigate("/history") },

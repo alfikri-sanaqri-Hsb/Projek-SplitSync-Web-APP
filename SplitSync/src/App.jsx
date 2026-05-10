@@ -8,6 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Demo from "@/pages/Demo";
 import NotFound from "@/pages/NotFound";
 import Settings from "@/pages/Settings";
+import StartAsHost from "./pages/StartAsHost";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/desktop" element={<Desktop />} />
+
+        <Route path="/startashost" element={<StartAsHost />} />
 
         <Route
           path="/history"
