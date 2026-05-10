@@ -17,12 +17,12 @@ export default function Hero() {
           <div className="flex gap-4 justify-center md:justify-start">
             <button
               onClick={() => navigate("/login")}
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition shadow-md hover:shadow-lg">
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg">
               Start Now
             </button> 
             <button
               onClick={() => navigate("/demo")}
-              className="bg-white text-black dark:text-white px-6 py-2 rounded-lg hover:bg-gray-150 dark:bg-gray-600 dark:hover:bg-gray-700 transition shadow-md hover:shadow-lg">
+              className="bg-white text-black dark:text-white px-6 py-2 rounded-lg hover:bg-gray-150 dark:bg-gray-600 dark:hover:bg-gray-700 transition transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg">
               Try Demo
             </button>
           </div>

@@ -15,7 +15,7 @@ export default function ContinueSession({ onSecondaryClick }) {
               Continue Previous Session
             </h3>
             <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-              You have an active session. Click to view breakdown or complete payments.
+              Resume from where you left off (autosave recovery)
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
+import Register from "@/pages/Register";
 import Desktop from "@/pages/Desktop";
 import History from "@/pages/History";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -15,6 +16,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
 
         <Route path="/desktop" element={<Desktop />} />
 
