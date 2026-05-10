@@ -4,17 +4,18 @@ import Login from "@/pages/Login";
 import Desktop from "@/pages/Desktop";
 import History from "@/pages/History";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Demo from "@/pages/Demo";
+import NotFound from "@/pages/NotFound";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/desktop"
-          element={<Desktop />}
-        />
+
+        <Route path="/desktop" element={<Desktop />} />
 
         <Route
           path="/history"
@@ -25,7 +26,9 @@ function App() {
           }
         />
 
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<NotFound />} />
+
+        <Route path="/demo" element={<Demo />} />
       </Routes>
     </BrowserRouter>
   );

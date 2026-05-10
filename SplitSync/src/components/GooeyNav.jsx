@@ -9,14 +9,14 @@ const GooeyNav = ({
   particleR = 100,
   timeVariance = 300,
   colors = [1, 2, 3, 1, 2, 3, 1, 4],
-  initialActiveIndex = 0
+  initialActiveIndex = null
 }) => {
   const { goTo } = useNavigation();
   const containerRef = useRef(null);
   const navRef = useRef(null);
   const filterRef = useRef(null);
   const textRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(initialActiveIndex);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   const noise = (n = 1) => n / 2 - Math.random() * n;
   const getXY = (distance, pointIndex, totalPoints) => {
@@ -53,7 +53,7 @@ const GooeyNav = ({
         particle.style.setProperty('--end-y', `${p.end[1]}px`);
         particle.style.setProperty('--time', `${p.time}ms`);
         particle.style.setProperty('--scale', `${p.scale}`);
-        particle.style.setProperty('--color', `var(--color-${p.color}, white)`);
+        particle.style.setProperty('--color', '#3b82f6');
         particle.style.setProperty('--rotate', `${p.rotate}deg`);
         point.classList.add('point');
         particle.appendChild(point);
@@ -117,6 +117,7 @@ const GooeyNav = ({
   };
   useEffect(() => {
     if (!navRef.current || !containerRef.current) return;
+    if (activeIndex === null) return;
     const activeLi = navRef.current.querySelectorAll('li')[activeIndex];
     if (activeLi) {
       updateEffectPosition(activeLi);
@@ -148,28 +149,27 @@ const GooeyNav = ({
             z-index: 1;
           }
           .effect.text {
-            color: white;
+            color: transparent;
             transition: color 0.3s ease;
           }
           .effect.text.active {
-            color: black;
+            color: white;
           }
           .effect.filter {
-            filter: blur(7px) contrast(100) blur(0);
-            mix-blend-mode: lighten;
+            mix-blend-mode: normal;
           }
           .effect.filter::before {
             content: "";
             position: absolute;
             inset: -75px;
             z-index: -2;
-            background: black;
+            background: transparent;
           }
           .effect.filter::after {
             content: "";
             position: absolute;
             inset: 0;
-            background: white;
+            background: #3b82f6;
             transform: scale(0);
             opacity: 0;
             z-index: -1;
@@ -252,7 +252,7 @@ const GooeyNav = ({
             }
           }
           li.active {
-            color: black;
+            color: inherit;
             text-shadow: none;
           }
           li.active::after {
@@ -264,10 +264,10 @@ const GooeyNav = ({
             position: absolute;
             inset: 0;
             border-radius: 8px;
-            background: white;
+            background: #3b82f6;
             opacity: 0;
             transform: scale(0);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             z-index: -1;
           }
         `}
@@ -278,16 +278,26 @@ const GooeyNav = ({
           style={{ transform: 'translate3d(0,0,0.01px)' }}>
           <ul
             ref={navRef}
-            className="flex gap-8 list-none p-0 px-4 m-0 relative z-[3]"
-            style={{
-              color: 'white',
-              textShadow: '0 1px 1px hsl(205deg 30% 10% / 0.2)'
-            }}>
+            className="flex gap-8 list-none p-0 px-4 m-0 relative z-[3] text-black dark:text-white"
+          >
             {items.map((item, index) => (
               <li
                 key={index}
-                className={`rounded-full relative cursor-pointer transition-all duration-300 ease text-white ${
-                  activeIndex === index ? 'active' : ''
+                onMouseEnter={(e) => handleClick(e, index)}
+                onMouseLeave={() => {
+                  setActiveIndex(-1);
+
+                  if (filterRef.current) {
+                    filterRef.current.classList.remove("active");
+                  }
+
+                  if (textRef.current) {
+                    textRef.current.classList.remove("active");
+                    textRef.current.innerText = "";
+                  }
+                }}
+                className={`rounded-full relative cursor-pointer transition-all duration-300 ease text-black dark:text-white ${
+                  activeIndex === index ? "active" : ""
                 }`}
               >
                 <button
@@ -301,7 +311,7 @@ const GooeyNav = ({
                     }
                   }}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="outline-none py-[0.6em] px-[1em]"
+                  className="outline-none py-[0.6em] px-[1em] inline-block text-black dark:text-white"
                 >
                   {item.label}
                 </button>

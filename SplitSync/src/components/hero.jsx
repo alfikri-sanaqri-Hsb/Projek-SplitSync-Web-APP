@@ -1,9 +1,11 @@
 import Illustration from "@/assets/hero.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <section className="bg-gray-100 dark:bg-gray-800 py-12 md:py-20 px-4">   
-      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+      <div className="mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
         
         <div className="flex-1 text-center md:text-left">  
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 leading-tight text-gray-800 dark:text-white">
@@ -12,9 +14,18 @@ export default function Hero() {
           <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm md:text-base max-w-md mx-auto md:mx-0">
             Upload atau scan struk, bagi menu ke teman, dan lihat siapa sudah bayar secara realtime
           </p>
-          <button className="bg-orange-500 text-white px-6 py-2.5 rounded-lg hover:bg-orange-600 transition shadow-md hover:shadow-lg">
-            Start Now
-          </button>
+          <div className="flex gap-4 justify-center md:justify-start">
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition shadow-md hover:shadow-lg">
+              Start Now
+            </button> 
+            <button
+              onClick={() => navigate("/demo")}
+              className="bg-white text-black dark:text-white px-6 py-2 rounded-lg hover:bg-gray-150 dark:bg-gray-600 dark:hover:bg-gray-700 transition shadow-md hover:shadow-lg">
+              Try Demo
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 flex justify-center">

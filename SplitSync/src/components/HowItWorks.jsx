@@ -1,27 +1,29 @@
 import { Camera, MousePointer2, ReceiptText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function HowItWorks() {
+  const navigate = useNavigate();
   const steps = [
     {
       title: "Upload receipt",
       desc: "Take a photo or upload your restaurant receipt",
-      icon: <Camera className="w-8 h-8 text-teal-500" />,
+      icon: <Camera className="w-8 h-8 text-blue-500" />,
     },
     {
       title: "Assign items to people",
       desc: "Drag and drop menu items to each person",
-      icon: <MousePointer2 className="w-8 h-8 text-teal-500" />,
+      icon: <MousePointer2 className="w-8 h-8 text-blue-500" />,
     },
     {
       title: "Generate payment summary",
       desc: "Get instant breakdown of who owes what",
-      icon: <ReceiptText className="w-8 h-8 text-teal-500" />,
+      icon: <ReceiptText className="w-8 h-8 text-blue-500" />,
     },
   ];
 
   return (
     <section className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-6xl mx-auto px-4 text-center">
+      <div className="mx-auto px-4 text-center">
         
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
           How It Works
@@ -33,7 +35,7 @@ export default function HowItWorks() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           {steps.map((step, index) => (
             <div key={index} className="flex flex-col items-center">
-              <div className="w-24 h-24 bg-teal-50 dark:bg-teal-900/30 rounded-full flex items-center justify-center mb-6 shadow-sm border border-teal-100 dark:border-teal-800">
+              <div className="w-24 h-24 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center mb-6 shadow-sm border border-blue-100 dark:border-blue-800">
                 {step.icon}
               </div>
               
@@ -47,8 +49,10 @@ export default function HowItWorks() {
           ))}
         </div>
 
-        <button className="bg-[#10b981] hover:bg-[#059669] text-white px-10 py-4 rounded-2xl text-lg font-semibold shadow-[0_10px_20px_rgba(16,185,129,0.3)] transition-all transform hover:-translate-y-1">
-          Get Started
+        <button
+          onClick={() => navigate("/login")}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-2xl text-lg font-semibold shadow-blue-500/50 transition-all transform hover:-translate-y-1">
+          Get Started Now
         </button>
 
       </div>

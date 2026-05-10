@@ -39,11 +39,11 @@ export default function Navbar() {
 
 
   return (
-    <nav className="bg-teal-400 dark:bg-gray-900 text-white shadow-lg w-full">
-      <div className="max-w-6xl mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
+    <nav className="sticky top-0 bg-white -400 dark:bg-gray-900 text-black dark:text-white shadow-lg w-full overflow-hidden">
+      <div className="mx-auto px-4 md:px-6 py-2 flex justify-between items-center">
         
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
-          <img src={Logo} alt="logo" className="w-10 h-10 rounded-full border-2 border-white" />
+          <img src={Logo} alt="logo" className="w-10 h-10 rounded-xl border-blue-500 border-white" />
           <h2 className="font-bold text-lg">SplitSync</h2>
         </div>
 

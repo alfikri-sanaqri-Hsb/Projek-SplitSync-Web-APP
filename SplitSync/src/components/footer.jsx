@@ -4,16 +4,16 @@ export default function Footer() {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-10">
       
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
         <div>
           <div className="flex items-center gap-3 mb-3">
             <img
               src={Logo}
               alt="logo"
-              className="w-10 h-10 rounded-full object-cover border-2 border-white"
+              className="w-10 h-10 rounded-xl object-cover border-blue-500 border-white"
             />
-            <h2 className="text-xl font-bold text-teal-500">
+            <h2 className="text-xl font-bold text-black-500">
               SplitSync
             </h2>
           </div>
@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-3 text-teal-500">About</h3>
+          <h3 className="font-semibold mb-3 text-black-500">About</h3>
           <ul className="space-y-2 text-sm">
             <li className="hover:text-teal-500 transition cursor-pointer">About SplitSync</li>
             <li className="hover:text-teal-500 transition cursor-pointer">Contact</li>
@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="font-semibold mb-3 text-teal-500">Features</h3>
+          <h3 className="font-semibold mb-3 text-black-500">Features</h3>
           <ul className="space-y-2 text-sm">
             <li className="hover:text-teal-500 transition cursor-pointer">Scan Receipt</li>
             <li className="hover:text-teal-500 transition cursor-pointer">Assign Items</li>
@@ -46,7 +46,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-gray-300 dark:border-gray-700">
-        <p className="text-center text-sm text-teal-500 py-4">
+        <p className="text-center text-sm text-black-500 py-4">
           © 2026 SplitSync. All rights reserved.
         </p>
       </div>
