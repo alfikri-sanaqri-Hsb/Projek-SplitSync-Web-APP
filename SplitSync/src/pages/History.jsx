@@ -3,7 +3,21 @@ import axios from "axios";
 import MainLayout from "@/layout/MainLayout";
 import HistoryCard from "@/components/History/HistoryCard";
 import { Search } from "lucide-react";
+import LoadingSpinner from "@/components/Common/LoadingSpinner";
 
+const EmptyState = () => (
+  <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in zoom-in duration-300">
+    <div className="bg-indigo-50 dark:bg-indigo-900/20 p-8 rounded-full mb-6">
+      <Search className="w-12 h-12 text-indigo-500 dark:text-indigo-400 opacity-50" />
+    </div>
+    <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+      No Transactions Found
+    </h3>
+    <p className="text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+      We couldn't find any transaction history for this period or search query.
+    </p>
+  </div>
+);
 export default function History() {
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -37,8 +51,8 @@ export default function History() {
       if (activeFilter === "Today") {
         matchesDate = billDate.toDateString() === now.toDateString();
       } else if (activeFilter === "This Week") {
-        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
-        matchesDate = billDate >= startOfWeek;
+        const tempDate = new Date(); // copy dari now
+        const startOfWeek = new Date(tempDate.setDate(tempDate.getDate() - tempDate.getDay())); matchesDate = billDate >= startOfWeek;
       } else if (activeFilter === "This Month") {
         matchesDate = billDate.getMonth() === now.getMonth() && billDate.getFullYear() === now.getFullYear();
       }
@@ -49,7 +63,7 @@ export default function History() {
 
   return (
     <MainLayout>
-      <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="max-w-7xl mx-auto px-4 py-10">
         <h1 className="text-4xl font-black text-gray-900 dark:text-white mb-2">Transaction History</h1>
         <p className="text-gray-500 mb-8">View and manage all your split bill transactions</p>
 
@@ -81,13 +95,14 @@ export default function History() {
         </div>
 
         {loading ? (
-          <p className="text-center text-gray-500">Loading history...</p>
+          <div className="py-20">
+            <LoadingSpinner size="lg" color="indigo" />
+            <p className="text-center text-gray-500 mt-4">Memuat riwayat transaksi...</p>
+          </div>
         ) : filteredBills.length > 0 ? (
           filteredBills.map((bill) => <HistoryCard key={bill.id} bill={bill} />)
         ) : (
-          <div className="text-center py-20 bg-gray-50 dark:bg-gray-800/50 rounded-3xl border-2 border-dashed border-gray-200 dark:border-gray-700">
-             <p className="text-gray-500">Data tidak ditemukan. Coba cari kata kunci lain!</p>
-          </div>
+          <EmptyState />
         )}
       </div>
     </MainLayout>

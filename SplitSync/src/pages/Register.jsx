@@ -4,15 +4,15 @@ import { useNavigate, Link } from "react-router-dom";
 import MainLayout from "@/layout/MainLayout";
 import { Mail, Lock, User } from "lucide-react";
 import Logo from "@/assets/logo.png";
+import LoadingSpinner from "@/components/Common/LoadingSpinner";
 
 export default function Register() {
-
     const navigate = useNavigate();
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -22,8 +22,9 @@ export default function Register() {
             return;
         }
 
-        try {
+        setLoading(true);
 
+        try {
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/register",
                 {
@@ -34,18 +35,15 @@ export default function Register() {
             );
 
             console.log(response.data);
-
             localStorage.setItem("token", response.data.token);
-
             alert("Register berhasil!");
-
             navigate("/login");
 
         } catch (error) {
-
             console.log(error);
-
             alert("Register gagal");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -178,10 +176,11 @@ export default function Register() {
                     </div>
 
                     <button
+                        disabled={loading}
                         type="submit"
-                        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-500 transition"
-                    >
-                        Create Account
+                        className="w-full bg-indigo-600 text-white py-3 rounded-xl flex justify-center items-center mt-4 transition-all active:scale-95 disabled:opacity-70"
+                    > 
+                        {loading ? <LoadingSpinner size="sm" color="white" /> : "Create Account"}
                     </button>
 
                     <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
