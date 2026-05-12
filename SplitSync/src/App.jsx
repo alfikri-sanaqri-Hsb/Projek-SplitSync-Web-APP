@@ -8,7 +8,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import Demo from "@/pages/Demo";
 import NotFound from "@/pages/NotFound";
 import Settings from "@/pages/Settings";
-import StartAsHost from "./pages/StartAsHost";
+import StartAsHost from "@/pages/StartAsHost";
+import HistoryDetail from "@/pages/HistoryDetail";
 
 function App() {
   return (
@@ -20,14 +21,17 @@ function App() {
 
         <Route path="/register" element={<Register />} />
 
-        <Route path="/desktop" element={<Desktop />} />
+        <Route path="/desktop" element={<ProtectedRoute><Desktop /></ProtectedRoute>} />
 
-        <Route path="/startashost" element={<StartAsHost />} />
+        <Route path="/startashost" element={ <ProtectedRoute> <StartAsHost /> </ProtectedRoute> } />
 
         <Route
           path="/history"
-          element={
-              <History />} />
+          element={<ProtectedRoute> <History /> </ProtectedRoute>} />
+
+        <Route 
+          path="/history/:id" 
+          element={<ProtectedRoute><HistoryDetail /></ProtectedRoute>} />    
 
         <Route path="/settings" element={<Settings />} />     
 
