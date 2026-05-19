@@ -1,7 +1,7 @@
 import MainLayout from "@/layout/MainLayout";
-import Hero from "@/components/hero";
-import Features from "@/components/Features";
-import HowItWorks from "@/components/HowItWorks";
+import Hero from "@/components/Home/hero";
+import Features from "@/components/Home/Features";
+import HowItWorks from "@/components/Home/HowItWorks";
 
 export default function Home() {
   return (

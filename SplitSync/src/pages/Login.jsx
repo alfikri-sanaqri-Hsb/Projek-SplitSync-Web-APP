@@ -5,38 +5,74 @@ import MainLayout from "@/layout/MainLayout";
 import { Mail, Lock } from "lucide-react";
 import Logo from "@/assets/logo.png";
 import LoadingSpinner from "@/components/Common/LoadingSpinner";
+import Toast from "@/components/common/toast";
 
 export default function Login() {
+
   const navigate = useNavigate();
+
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("success");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
+
   const handleLogin = async (e) => {
+
     e.preventDefault();
-    
+
     setLoading(true);
 
     try {
+
       const response = await axios.post(
         "http://127.0.0.1:8000/api/login",
-        { email, password }
+        {
+          email,
+          password,
+        }
       );
 
       localStorage.setItem("token", response.data.token);
-      alert("Login berhasil!");
-      navigate("/desktop");
+
+      setToastMessage("Login berhasil!");
+      setToastType("success");
+      setShowToast(true);
+
+      setTimeout(() => {
+        navigate("/desktop");
+      }, 1500);
 
     } catch (error) {
+
       console.log(error);
-      alert("Email atau password salah!");
+
+      setToastMessage("Email atau password salah!");
+      setToastType("error");
+      setShowToast(true);
+
     } finally {
+
       setLoading(false);
+
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
     }
   };
 
   return (
     <MainLayout>
+      {showToast && (
+        <Toast
+          message={toastMessage}
+          type={toastType}
+        />
+      )}
+
       <div className="flex items-center justify-center min-h-[70vh] px-4 mt-12">
 
         <form
@@ -74,6 +110,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full outline-none text-gray-700 bg-transparent"
+                required
               />
             </div>
           </div>
@@ -92,20 +129,31 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full outline-none text-gray-700 bg-transparent"
+                required
               />
             </div>
           </div>
 
-          <button 
-            disabled={loading} 
-            className="w-full bg-indigo-600 text-white py-3 rounded-xl flex justify-center items-center mt-4 transition-all active:scale-95 disabled:opacity-70"
-          >
-            {loading ? <LoadingSpinner size="sm" color="white" /> : "Login"}
+          <button
+            type="submit"
+            disabled={loading}
+            className="
+              w-full bg-indigo-600 text-white py-3 rounded-xl flex justify-center items-center mt-4 transition-all active:scale-95 hover:bg-indigo-500 disabled:opacity-70"
+              >
+            {loading ? (
+              <LoadingSpinner size="sm" color="white" />
+            ) : (
+              "Login"
+            )}
           </button>
 
           <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-500 font-semibold">
+
+            <Link
+              to="/register"
+              className="text-blue-500 font-semibold"
+            >
               Sign up
             </Link>
           </p>

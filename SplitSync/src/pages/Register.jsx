@@ -5,56 +5,102 @@ import MainLayout from "@/layout/MainLayout";
 import { Mail, Lock, User } from "lucide-react";
 import Logo from "@/assets/logo.png";
 import LoadingSpinner from "@/components/Common/LoadingSpinner";
+import Toast from "@/components/common/toast";
 
 export default function Register() {
+
     const navigate = useNavigate();
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
+    const [toastType, setToastType] = useState("success");
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [qris, setQris] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleRegister = async (e) => {
+
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            alert("Confirm password tidak sama!");
+
+            setToastMessage("Confirm password tidak sama!");
+            setToastType("error");
+            setShowToast(true);
+
+            setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
+
             return;
         }
 
         setLoading(true);
 
         try {
+            const formData = new FormData();
+
+            formData.append("name", name);
+            formData.append("email", email);
+            formData.append("password", password);
+
+            if (qris) {
+                formData.append("qris", qris);
+            }
+
             const response = await axios.post(
                 "http://127.0.0.1:8000/api/register",
+                formData,
                 {
-                    name,
-                    email,
-                    password,
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 }
             );
 
             console.log(response.data);
+
             localStorage.setItem("token", response.data.token);
-            alert("Register berhasil!");
-            navigate("/login");
+
+            setToastMessage("Register berhasil!");
+            setToastType("success");
+            setShowToast(true);
+
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500);
 
         } catch (error) {
             console.log(error);
-            alert("Register gagal");
+            setToastMessage("Register gagal!");
+            setToastType("error");
+            setShowToast(true);
+
         } finally {
             setLoading(false);
+            setTimeout(() => {
+                setShowToast(false);
+            }, 3000);
         }
     };
 
     return (
         <MainLayout>
+
+            {showToast && (
+                <Toast
+                    message={toastMessage}
+                    type={toastType}
+                />
+            )}
+
             <div className="flex items-center justify-center min-h-[70vh] px-4 my-20">
 
                 <form
                     onSubmit={handleRegister}
-                    className="w-full max-w-md bg-gray-200 dark:bg-gray-900 p-8 rounded-2xl shadow-xl"
-                >
+                    className="w-full max-w-md bg-gray-200 dark:bg-gray-900 p-8 rounded-2xl shadow-xl">
 
                     <div className="flex justify-center mb-4">
                         <img
@@ -79,7 +125,6 @@ export default function Register() {
 
                         <div className="flex items-center bg-white rounded-lg px-3 py-2 mt-1">
                             <User className="text-gray-400 w-5 h-5 mr-2" />
-
                             <input
                                 type="text"
                                 placeholder="Your Name"
@@ -98,7 +143,6 @@ export default function Register() {
 
                         <div className="flex items-center bg-white rounded-lg px-3 py-2 mt-1">
                             <Mail className="text-gray-400 w-5 h-5 mr-2" />
-
                             <input
                                 type="email"
                                 placeholder="example@email.com"
@@ -117,7 +161,6 @@ export default function Register() {
 
                         <div className="flex items-center bg-white rounded-lg px-3 py-2 mt-1">
                             <Lock className="text-gray-400 w-5 h-5 mr-2" />
-
                             <input
                                 type="password"
                                 placeholder="********"
@@ -136,7 +179,6 @@ export default function Register() {
 
                         <div className="flex items-center bg-white rounded-lg px-3 py-2 mt-1">
                             <Lock className="text-gray-400 w-5 h-5 mr-2" />
-
                             <input
                                 type="password"
                                 placeholder="********"
@@ -158,15 +200,9 @@ export default function Register() {
                             <input
                                 type="file"
                                 accept="image/*"
-                                className="w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-white border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 cursor-pointer
-                                file:mr-4
-                                file:py-2
-                                file:px-4
-                                file:rounded-lg
-                                file:border-0
-                                file:bg-blue-600
-                                file:text-white
-                                hover:file:bg-blue-500"
+                                onChange={(e) => setQris(e.target.files[0])}
+                                className="
+                                    w-full bg-white dark:bg-gray-800 text-gray-700 dark:text-white border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-blue-600 file:text-white hover:file:bg-blue-500"
                             />
                         </div>
 
@@ -178,21 +214,23 @@ export default function Register() {
                     <button
                         disabled={loading}
                         type="submit"
-                        className="w-full bg-indigo-600 text-white py-3 rounded-xl flex justify-center items-center mt-4 transition-all active:scale-95 disabled:opacity-70"
-                    > 
-                        {loading ? <LoadingSpinner size="sm" color="white" /> : "Create Account"}
+                        className="
+                            w-full bg-indigo-600 text-white py-3 rounded-xl flex justify-center items-center mt-4 transition-all active:scale-95 hover:bg-indigo-500 disabled:opacity-70">
+                        {loading ? (
+                            <LoadingSpinner size="sm" color="white" />
+                        ) : (
+                            "Create Account"
+                        )}
                     </button>
 
                     <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
                         Have an account?{" "}
                         <Link
                             to="/login"
-                            className="text-blue-500 font-semibold"
-                        >
+                            className="text-blue-500 font-semibold">
                             Login
                         </Link>
                     </p>
-
                 </form>
             </div>
         </MainLayout>

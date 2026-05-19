@@ -1,19 +1,21 @@
 import GooeyNav from "@/components/GooeyNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.png";
-import { Moon, Sun, Settings } from "lucide-react";
+import { Moon, Sun, Settings, Bell } from "lucide-react";
 import { useDarkMode } from "@/hooks/DarkMode";
 
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isDarkMode, setIsDarkMode } = useDarkMode();
+  const token = localStorage.getItem("token");
 
   const isLoginPage = location.pathname === "/login";
   const isSettingsPage = location.pathname === "/settings";
   const isDesktopPage = location.pathname === "/desktop";
-  const isHistoryPage = location.pathname === "/history";
   const isStartPage = location.pathname === "/startashost";
+  const isHistoryPage = location.pathname.startsWith("/history");
+  const isHistoryDetailPage = location.pathname.startsWith("/historydetail");
 
   let items = [];
 
@@ -24,12 +26,20 @@ export default function Navbar() {
     ];
   } else if (isSettingsPage) {
     items = [
-      { label: "Home", onClick: () => navigate("/") },
-      { label: "Login", onClick: () => navigate("/login") },
+      { label: "Home", onClick: () => navigate("/desktop") },
+      { label: "History", onClick: () => navigate("/history") },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          navigate("/login");
+        },
+      },
     ];
   } else if (isDesktopPage) {
     items = [
-      { label: "Desktop", onClick: () => navigate("/desktop") },
+      { label: "Home", onClick: () => navigate("/desktop") },
       { label: "History", onClick: () => navigate("/history") },
       {
         label: "Logout",
@@ -41,7 +51,7 @@ export default function Navbar() {
     ];
   } else if (isStartPage) {
     items = [
-      { label: "Desktop", onClick: () => navigate("/desktop") },
+      { label: "Home", onClick: () => navigate("/desktop") },
       { label: "History", onClick: () => navigate("/history") },
       {
         label: "Logout",
@@ -53,7 +63,19 @@ export default function Navbar() {
     ];
   }else if (isHistoryPage) {
     items = [
-      { label: "Desktop", onClick: () => navigate("/desktop") },
+      { label: "Home", onClick: () => navigate("/desktop") },
+      { label: "History", onClick: () => navigate("/history") },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        },
+      },
+    ];
+  } else if (isHistoryDetailPage) {
+    items = [
+      { label: "Home", onClick: () => navigate("/desktop") },
       { label: "History", onClick: () => navigate("/history") },
       {
         label: "Logout",
@@ -97,11 +119,26 @@ export default function Navbar() {
                 onClick={() => setIsDarkMode(true)} />
             )}
             
-            <Settings 
-              size={20} 
-              className="cursor-pointer hover:rotate-90 transition-transform duration-300" 
-              onClick={() => navigate("/settings")} 
-            />
+            <button
+              className="p-2 rounded-full hover:bg-white/10 transition"
+              onClick={() => {
+                if (token) {
+                  navigate("/settings");
+                }
+              }}
+            >
+              {token ? (
+                <Settings
+                  size={20}
+                  className="cursor-pointer hover:rotate-90 transition-transform duration-300"
+                />
+              ) : (
+                <Bell
+                  size={20}
+                  className="cursor-pointer hover:text-blue-500 transition-colors"
+                />
+              )}
+            </button>
           </div>
         </div>
 
