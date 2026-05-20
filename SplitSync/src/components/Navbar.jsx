@@ -16,6 +16,8 @@ export default function Navbar() {
   const isStartPage = location.pathname === "/startashost";
   const isHistoryPage = location.pathname.startsWith("/history");
   const isHistoryDetailPage = location.pathname.startsWith("/historydetail");
+  const isReceiptResultPage = location.pathname.startsWith("/receipt-result");
+  
 
   let items = [];
 
@@ -85,7 +87,19 @@ export default function Navbar() {
         },
       },
     ];
-  } else {
+  } else if (isReceiptResultPage) {
+    items = [
+      { label: "Home", onClick: () => navigate("/desktop") },
+      { label: "History", onClick: () => navigate("/history") },
+      {
+        label: "Logout",
+        onClick: () => {
+          localStorage.removeItem("token");
+          navigate("/login");
+        },
+      },
+    ];
+  }else {
     items = [
       { label: "Login", onClick: () => navigate("/login") },
     ];

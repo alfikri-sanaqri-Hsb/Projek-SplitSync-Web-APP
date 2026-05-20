@@ -8,7 +8,7 @@ import UploadBox from "@/components/OCR/UploadBox";
 import OCRLoading from "@/components/OCR/OCRLoading";
 import OCRPreview from "@/components/OCR/OCRPreview";
 
-import Toast from "@/components/ui/Toast";
+import Toast from "@/components/common/Toast";
 
 export default function UploadReceipt() {
 
@@ -37,69 +37,79 @@ export default function UploadReceipt() {
 
   const handleOCR = async () => {
 
+    console.log("BUTTON OCR DIKLIK");
+
     if (!image) {
 
-      setToastMessage("Upload gambar receipt terlebih dahulu");
+        console.log("IMAGE KOSONG");
 
-      setToastType("error");
+        setToastMessage("Upload gambar receipt terlebih dahulu");
 
-      setShowToast(true);
+        setToastType("error");
 
-      setTimeout(() => {
+        setShowToast(true);
+
+        setTimeout(() => {
         setShowToast(false);
-      }, 3000);
+        }, 3000);
 
-      return;
+        return;
     }
 
     try {
 
-      setLoading(true);
+        console.log("MULAI OCR");
 
-      const token = localStorage.getItem("token");
+        setLoading(true);
 
-      const formData = new FormData();
+        const token = localStorage.getItem("token");
 
-      formData.append("receipt", image);
+        const formData = new FormData();
 
-      // API OCR
-      const response = await axios.post(
+        formData.append("receipt", image);
+
+        console.log("FORM DATA :", image);
+
+        const response = await axios.post(
         "http://127.0.0.1:8000/api/ocr-receipt",
         formData,
         {
-          headers: {
+            headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
-          },
+            },
         }
-      );
+        );
 
-      // REDIRECT KE RESULT
-      navigate("/receipt-result", {
+        console.log("OCR RESPONSE :", response.data);
+
+        navigate("/receipt-result", {
         state: {
-          receiptData: response.data.data,
+            receiptData: response.data.data,
         },
-      });
+        });
 
     } catch (error) {
 
-      console.error(error);
+        console.log("OCR ERROR :", error);
 
-      setToastMessage("OCR gagal diproses");
+        console.log("OCR ERROR RESPONSE :", error.response);
 
-      setToastType("error");
+        setToastMessage("OCR gagal diproses");
 
-      setShowToast(true);
+        setToastType("error");
 
-      setTimeout(() => {
-        setShowToast(false);
-      }, 3000);
+        setShowToast(true);
 
     } finally {
 
-      setLoading(false);
+        setLoading(false);
+
+        setTimeout(() => {
+        setShowToast(false);
+        }, 3000);
     }
-  };
+    };
 
   return (
     <MainLayout>
@@ -149,15 +159,37 @@ export default function UploadReceipt() {
             {/* UPLOAD BOX */}
             <UploadBox
               onFileSelect={handleFileChange}
+              onUpload={handleOCR}
             />
 
             {/* PREVIEW */}
             {preview && (
 
-              <OCRPreview
+            <div>
+                
+                <OCRPreview
                 image={preview}
                 onProcess={handleOCR}
-              />
+                />
+
+                <button
+                onClick={() => {
+                    console.log("TEST BUTTON");
+                    handleOCR();
+                }}
+                className="
+                    mt-6
+                    bg-red-500
+                    text-white
+                    px-6
+                    py-3
+                    rounded-xl
+                "
+                >
+                TEST OCR
+                </button>
+
+            </div>
 
             )}
 

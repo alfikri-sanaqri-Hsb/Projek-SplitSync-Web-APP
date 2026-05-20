@@ -6,7 +6,6 @@ import MainLayout from "@/layout/MainLayout";
 import BillHeader from "@/components/Bill/BillHeader";
 import BillFooter from "@/components/Bill/BillFooter";
 import EditableBillItem from "@/components/Bill/EditableBillItem";
-import ParticipantInput from "@/components/Bill/ParticipantInput";
 
 import {
   ArrowLeft,
@@ -22,10 +21,8 @@ export default function ReceiptResult() {
 
   const location = useLocation();
 
-  // DATA DARI OCR
   const receiptData = location.state?.receiptData;
 
-  // DEFAULT DATA JIKA TIDAK ADA
   const [billTitle, setBillTitle] = useState(
     receiptData?.title || "Hasil Scan Receipt"
   );
@@ -36,11 +33,11 @@ export default function ReceiptResult() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleParticipantChange = (index, value) => {
+  const handleItemChange = (index, updatedItem) => {
 
     const updatedItems = [...items];
 
-    updatedItems[index].participant_name = value;
+    updatedItems[index] = updatedItem;
 
     setItems(updatedItems);
   };
@@ -57,9 +54,9 @@ export default function ReceiptResult() {
     setItems(updatedItems);
   };
 
-  const totalPrice = items.reduce(
-    (total, item) => total + Number(item.price),
-    0
+  const totalPrice = (items || []).reduce(
+  (total, item) => total + Number(item.price || 0),
+  0
   );
 
   const handleSaveBill = async () => {
@@ -75,10 +72,12 @@ export default function ReceiptResult() {
         participants: items.length,
         items: items.map((item) => ({
           item_name: item.item_name,
-          price: item.price,
+          price: Number(item.price),
           participant_name: item.participant_name || "",
         })),
       };
+
+      console.log("PAYLOAD :", payload);
 
       const response = await axios.post(
         "http://127.0.0.1:8000/api/bills",
@@ -90,12 +89,18 @@ export default function ReceiptResult() {
         }
       );
 
-      // PINDAH KE HISTORY DETAIL
+      console.log("SAVE RESPONSE :", response.data);
+
       navigate(`/history/${response.data.data.id}`);
 
     } catch (error) {
 
       console.error("Gagal menyimpan bill", error);
+
+      console.error(
+        "ERROR RESPONSE :",
+        error.response?.data
+      );
 
       alert("Gagal menyimpan bill");
 
@@ -141,7 +146,6 @@ export default function ReceiptResult() {
 
       <div className="max-w-4xl mx-auto px-4 py-10">
 
-        {/* BACK BUTTON */}
         <button
           onClick={() => navigate(-1)}
           className="
@@ -162,7 +166,6 @@ export default function ReceiptResult() {
 
         </button>
 
-        {/* CARD */}
         <div className="
           bg-white
           dark:bg-gray-800
@@ -174,38 +177,29 @@ export default function ReceiptResult() {
           dark:border-gray-700
         ">
 
-          {/* HEADER */}
           <BillHeader
-            title={billTitle}
-            date={new Date()}
-            participants={items.length}
+            title={billTitle || "Hasil Scan Receipt"}
+            date={new Date().toLocaleDateString("id-ID")}
+            participants={items?.length || 0}
             status="pending"
           />
 
           <div className="p-8">
 
-            {/* TITLE */}
             <div className="flex justify-between items-center mb-6">
 
               <h3 className="
-                text-lg
-                font-bold
-                text-gray-800
-                dark:text-white
-                flex
-                items-center
-                gap-2
+                text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2
               ">
 
                 <ReceiptText className="text-indigo-600 w-5 h-5" />
 
-                Hasil OCR Receipt
+                Hasil Scan
 
               </h3>
 
             </div>
 
-            {/* ITEM LIST */}
             <div className="space-y-4">
 
               {items.map((item, index) => (
@@ -213,47 +207,24 @@ export default function ReceiptResult() {
                 <EditableBillItem
                   key={index}
                   item={item}
-                  onStatusChange={() =>
-                    handleStatusChange(index)
-                  }
-                >
-
-                  <ParticipantInput
-                    value={item.participant_name || ""}
-                    onChange={(value) =>
-                      handleParticipantChange(index, value)
-                    }
-                  />
-
-                </EditableBillItem>
+                  index={index}
+                  onItemChange={handleItemChange}
+                  onStatusChange={handleStatusChange}
+                />
 
               ))}
 
             </div>
 
-            {/* FOOTER */}
             <BillFooter total={totalPrice} />
 
-            {/* SAVE BUTTON */}
             <div className="mt-8 flex justify-end">
 
               <button
                 onClick={handleSaveBill}
                 disabled={loading}
                 className="
-                  flex
-                  items-center
-                  gap-2
-                  bg-indigo-600
-                  hover:bg-indigo-500
-                  text-white
-                  px-6
-                  py-3
-                  rounded-2xl
-                  transition
-                  shadow-md
-                  disabled:opacity-70
-                "
+                  flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-2xl transition shadow-md disabled:opacity-70"
               >
 
                 <Save size={18} />

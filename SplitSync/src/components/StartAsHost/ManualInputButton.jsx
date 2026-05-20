@@ -69,7 +69,7 @@ export default function ManualInputButton() {
     const allItems = participantsData.flatMap(p => 
       p.items.map(item => ({
         item_name: item.item_name,
-        price: parseFloat(item.price) || 0, // Pastikan jadi angka
+        price: parseFloat(item.price) || 0,
         participant_name: p.name 
       }))
     );
