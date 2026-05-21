@@ -28,7 +28,6 @@ export default function StartAsHost() {
 
   const [toastType, setToastType] = useState("success");
 
-  // HANDLE FILE
   const handleFileChange = (file) => {
 
     if (!file) return;
@@ -38,7 +37,6 @@ export default function StartAsHost() {
     setPreview(URL.createObjectURL(file));
   };
 
-  // HANDLE OCR
   const handleOCR = async () => {
 
     if (!image) {
@@ -106,7 +104,6 @@ export default function StartAsHost() {
   return (
     <MainLayout>
 
-      {/* TOAST */}
       {showToast && (
         <Toast
           message={toastMessage}
@@ -118,10 +115,8 @@ export default function StartAsHost() {
 
         <div className="max-w-4xl w-full mx-auto">
 
-          {/* HEADER */}
           <PageHeader />
 
-          {/* LOADING */}
           {loading ? (
 
             <OCRLoading />
@@ -130,7 +125,6 @@ export default function StartAsHost() {
 
             <>
 
-              {/* UPLOAD BOX */}
               <div className="mt-10">
 
                 <UploadBox
@@ -139,7 +133,6 @@ export default function StartAsHost() {
 
               </div>
 
-              {/* PREVIEW */}
               {preview && (
 
                 <div className="mt-8">
@@ -153,12 +146,10 @@ export default function StartAsHost() {
 
               )}
 
-              {/* OR */}
               <div className="my-10 text-center text-gray-500 dark:text-gray-400 text-2xl font-medium">
                 or
               </div>
 
-              {/* MANUAL INPUT */}
               <ManualInputButton />
 
             </>

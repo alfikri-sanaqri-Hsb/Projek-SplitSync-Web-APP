@@ -18,14 +18,7 @@ export default function EditableBillItem({
   return (
     <div
       className="
-        bg-white
-        dark:bg-gray-900
-        border
-        border-gray-200
-        dark:border-gray-700
-        rounded-2xl
-        p-5
-        shadow-sm
+        bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl p-5 shadow-sm
       "
     >
       <div className="space-y-4">
@@ -42,13 +35,7 @@ export default function EditableBillItem({
               handleFieldChange("item_name", e.target.value)
             }
             className="
-              w-full
-              border
-              rounded-xl
-              px-4
-              py-3
-              dark:bg-gray-800
-              dark:text-white
+              w-full border rounded-xl px-4 py-3 dark:bg-gray-800 dark:text-white
             "
           />
         </div>
@@ -69,13 +56,7 @@ export default function EditableBillItem({
             }
             placeholder="Masukkan harga item..."
             className="
-            w-full
-            border
-            rounded-xl
-            px-4
-            py-3
-            dark:bg-gray-800
-            dark:text-white
+            w-full border rounded-xl px-4 py-3 dark:bg-gray-800 dark:text-white
             "
         />
         </div>

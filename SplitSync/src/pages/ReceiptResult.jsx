@@ -124,12 +124,7 @@ export default function ReceiptResult() {
           <button
             onClick={() => navigate("/")}
             className="
-              bg-indigo-600
-              hover:bg-indigo-500
-              text-white
-              px-5
-              py-3
-              rounded-2xl
+              bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-2xl
             "
           >
             Kembali
@@ -149,14 +144,7 @@ export default function ReceiptResult() {
         <button
           onClick={() => navigate(-1)}
           className="
-            flex
-            items-center
-            gap-2
-            text-gray-500
-            hover:text-indigo-600
-            mb-8
-            transition
-            font-medium
+            flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-8 transition font-medium
           "
         >
 
@@ -167,14 +155,7 @@ export default function ReceiptResult() {
         </button>
 
         <div className="
-          bg-white
-          dark:bg-gray-800
-          rounded-3xl
-          shadow-xl
-          overflow-hidden
-          border
-          border-gray-100
-          dark:border-gray-700
+          bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700
         ">
 
           <BillHeader

@@ -7,7 +7,6 @@ export default function BillHeader({
   status,
 }) {
 
-  // FORMAT DATE
   const formattedDate = date
     ? new Date(date).toLocaleDateString("id-ID", {
         day: "numeric",
@@ -29,7 +28,6 @@ export default function BillHeader({
 
           <div className="flex items-center gap-6 text-white/90">
 
-            {/* DATE */}
             <div className="flex items-center gap-2">
 
               <CalendarDays size={18} />
@@ -40,7 +38,6 @@ export default function BillHeader({
 
             </div>
 
-            {/* PARTICIPANTS */}
             <div className="flex items-center gap-2">
 
               <Users size={18} />
@@ -55,16 +52,9 @@ export default function BillHeader({
 
         </div>
 
-        {/* STATUS */}
         <span
           className="
-            bg-white/20
-            px-5
-            py-2
-            rounded-full
-            text-sm
-            font-bold
-            uppercase
+            bg-white/20 px-5 py-2 rounded-full text-sm font-bold uppercase
           "
         >
           {status}

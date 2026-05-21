@@ -114,7 +114,6 @@ export default function UploadReceipt() {
   return (
     <MainLayout>
 
-      {/* TOAST */}
       {showToast && (
         <Toast
           message={toastMessage}
@@ -124,30 +123,22 @@ export default function UploadReceipt() {
 
       <div className="max-w-5xl mx-auto px-4 py-10">
 
-        {/* HEADER */}
         <div className="text-center mb-10">
 
           <h1 className="
-            text-4xl
-            font-bold
-            text-gray-900
-            dark:text-white
-            mb-3
+            text-4xl font-bold text-gray-900 dark:text-white mb-3
           ">
             Upload Receipt
           </h1>
 
           <p className="
-            text-gray-500
-            dark:text-gray-400
-            text-lg
+            text-gray-500 dark:text-gray-400 text-lg
           ">
             Upload struk dan biarkan OCR membaca item otomatis
           </p>
 
         </div>
 
-        {/* LOADING */}
         {loading ? (
 
           <OCRLoading />
@@ -156,13 +147,11 @@ export default function UploadReceipt() {
 
           <div className="space-y-8">
 
-            {/* UPLOAD BOX */}
             <UploadBox
               onFileSelect={handleFileChange}
               onUpload={handleOCR}
             />
 
-            {/* PREVIEW */}
             {preview && (
 
             <div>
@@ -178,27 +167,16 @@ export default function UploadReceipt() {
                     handleOCR();
                 }}
                 className="
-                    mt-6
-                    bg-red-500
-                    text-white
-                    px-6
-                    py-3
-                    rounded-xl
+                    mt-6 bg-red-500 text-white px-6 py-3 rounded-xl
                 "
                 >
                 TEST OCR
                 </button>
-
             </div>
-
             )}
-
           </div>
-
         )}
-
       </div>
-
     </MainLayout>
   );
 }

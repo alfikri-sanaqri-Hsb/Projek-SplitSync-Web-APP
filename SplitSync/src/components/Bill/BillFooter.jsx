@@ -2,14 +2,7 @@ export default function BillFooter({ total }) {
 
   return (
     <div className="
-      mt-8
-      pt-6
-      border-t
-      border-gray-200
-      dark:border-gray-700
-      flex
-      justify-between
-      items-center
+      mt-8 pt-6 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center
     ">
 
       <h2 className="text-xl font-bold text-gray-700 dark:text-white">

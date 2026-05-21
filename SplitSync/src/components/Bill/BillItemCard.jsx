@@ -6,13 +6,7 @@ export default function BillItemCard({ item }) {
 
   return (
     <div className="
-      bg-gray-50
-      dark:bg-gray-800
-      rounded-2xl
-      p-5
-      flex
-      justify-between
-      items-center
+      bg-gray-50 dark:bg-gray-800 rounded-2xl p-5 flex justify-between items-center
     ">
 
       <div className="flex items-center gap-4">
@@ -46,15 +40,7 @@ export default function BillItemCard({ item }) {
         </h2>
 
         <span className="
-          inline-block
-          mt-2
-          px-3
-          py-1
-          rounded-full
-          text-sm
-          font-bold
-          bg-orange-100
-          text-orange-600
+          inline-block mt-2 px-3 py-1 rounded-full text-sm font-bold bg-orange-100 text-orange-600
         ">
           {item.payment_status}
         </span>

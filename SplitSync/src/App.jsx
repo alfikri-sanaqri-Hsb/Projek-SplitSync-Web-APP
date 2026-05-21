@@ -23,7 +23,6 @@ function App() {
 
       <Routes>
 
-        {/* PUBLIC */}
         <Route
           path="/"
           element={<Home />}
@@ -44,7 +43,6 @@ function App() {
           element={<Demo />}
         />
 
-        {/* PROTECTED */}
         <Route
           path="/desktop"
           element={
@@ -90,7 +88,6 @@ function App() {
           }
         />
 
-        {/* OCR RECEIPT */}
         <Route
           path="/upload-receipt"
           element={
@@ -109,7 +106,6 @@ function App() {
           }
         />
 
-        {/* NOT FOUND */}
         <Route
           path="*"
           element={<NotFound />}

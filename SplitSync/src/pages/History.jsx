@@ -51,7 +51,7 @@ export default function History() {
       if (activeFilter === "Today") {
         matchesDate = billDate.toDateString() === now.toDateString();
       } else if (activeFilter === "This Week") {
-        const tempDate = new Date(); // copy dari now
+        const tempDate = new Date();
         const startOfWeek = new Date(tempDate.setDate(tempDate.getDate() - tempDate.getDay())); matchesDate = billDate >= startOfWeek;
       } else if (activeFilter === "This Month") {
         matchesDate = billDate.getMonth() === now.getMonth() && billDate.getFullYear() === now.getFullYear();

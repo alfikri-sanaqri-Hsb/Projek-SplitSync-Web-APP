@@ -27,9 +27,7 @@ export default function UploadBox({
 
         <div
           className="
-            bg-blue-100
-            p-6
-            rounded-full
+            bg-blue-100 p-6 rounded-full
           "
         >
           <Upload
@@ -64,15 +62,7 @@ export default function UploadBox({
             onProcess();
           }}
           className="
-            mt-8
-            bg-blue-500
-            hover:bg-blue-600
-            text-white
-            px-8
-            py-4
-            rounded-2xl
-            font-bold
-            transition
+            mt-8 bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold transition
           "
         >
           Process Receipt
