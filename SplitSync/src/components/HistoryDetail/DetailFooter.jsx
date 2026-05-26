@@ -14,7 +14,7 @@ export default function DetailFooter({ total }) {
         <p className="text-3xl font-black text-indigo-600">{formatRupiah(total)}</p>
       </div>
       <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-lg shadow-indigo-200 dark:shadow-none">
-        Bagikan Tagihan
+        Download
       </button>
     </div>
   );

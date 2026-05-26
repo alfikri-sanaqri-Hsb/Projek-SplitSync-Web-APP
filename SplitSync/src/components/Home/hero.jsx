@@ -14,13 +14,6 @@ export default function Hero() {
           <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm md:text-base max-w-md mx-auto md:mx-0">
             Upload atau scan struk, bagi menu ke teman, dan lihat siapa sudah bayar secara realtime
           </p>
-          <div className="flex gap-4 justify-center md:justify-start"> 
-            <button
-              onClick={() => navigate("/demo")}
-              className="bg-white text-black dark:text-white px-6 py-2 rounded-lg hover:bg-gray-150 dark:bg-gray-600 dark:hover:bg-gray-700 transition transition-all transform hover:-translate-y-1 shadow-md hover:shadow-lg">
-              Try Demo
-            </button>
-          </div>
         </div>
 
         <div className="flex-1 flex justify-center">

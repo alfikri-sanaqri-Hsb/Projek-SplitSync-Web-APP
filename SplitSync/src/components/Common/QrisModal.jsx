@@ -7,22 +7,34 @@ export default function QrisModal({
   if (!isOpen) return null;
 
   return (
+
     <div
       className="
-        fixed inset-0 bg-black/60 flex items-center justify-centerz-50 p-4
+        fixed inset-0 z-50
+        flex items-center justify-center
+        bg-black/60
+        px-4
       "
     >
 
       <div
         className="
-          bg-white dark:bg-gray-900 rounded-3xl p-6 w-full max-w-md relative shadow-2xl
+          relative
+          w-full max-w-md
+          bg-white dark:bg-gray-900
+          rounded-3xl
+          shadow-2xl
+          p-6
+          mx-auto
         "
       >
 
         <button
           onClick={onClose}
           className="
-            absolute top-4 right-4 text-gray-400 hover:text-red-500 text-xl
+            absolute top-4 right-4
+            text-gray-400 hover:text-red-500
+            text-xl
           "
         >
           ✕
@@ -30,7 +42,10 @@ export default function QrisModal({
 
         <h2
           className="
-            text-2xlfont-bold text-center mb-6 dark:text-white
+            text-2xl font-bold
+            text-center
+            mb-6
+            dark:text-white
           "
         >
           Pembayaran QRIS
@@ -38,21 +53,35 @@ export default function QrisModal({
 
         {qris ? (
 
-          <img
-            src={`http://127.0.0.1:8000/storage/${qris}`}
-            alt="QRIS"
-            className="
-              w-full rounded-2xl border border-gray-200 dark:border-gray-700
-            "
-          />
+          <div className="flex justify-center items-center">
+
+            <div
+              className="
+                bg-white
+                p-4
+                rounded-2xl
+                border border-gray-200
+                dark:border-gray-700
+              "
+            >
+
+              <img
+                src={`http://127.0.0.1:8000/storage/${qris}`}
+                alt="QRIS"
+                className="
+                  w-64 h-64
+                  object-contain
+                  mx-auto
+                "
+              />
+
+            </div>
+
+          </div>
 
         ) : (
 
-          <div
-            className="
-              text-center text-gray-500 py-10
-            "
-          >
+          <div className="text-center text-gray-500 py-10">
             QRIS belum tersedia
           </div>
 

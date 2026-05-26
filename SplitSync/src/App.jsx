@@ -13,7 +13,6 @@ import ReceiptResult from "@/pages/ReceiptResult";
 
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-import Demo from "@/pages/Demo";
 import NotFound from "@/pages/NotFound";
 
 function App() {
@@ -38,10 +37,6 @@ function App() {
           element={<Register />}
         />
 
-        <Route
-          path="/demo"
-          element={<Demo />}
-        />
 
         <Route
           path="/desktop"

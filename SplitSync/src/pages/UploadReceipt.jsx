@@ -95,7 +95,11 @@ export default function UploadReceipt() {
 
         console.log("OCR ERROR RESPONSE :", error.response);
 
-        setToastMessage("OCR gagal diproses");
+        console.log(error.response?.data);
+
+        setToastMessage(
+          error.response?.data?.message || "OCR gagal diproses"
+        );
 
         setToastType("error");
 
