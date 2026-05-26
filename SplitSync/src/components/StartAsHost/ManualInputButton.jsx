@@ -10,7 +10,8 @@ export default function ManualInputButton() {
   const [loading, setLoading] = useState(false);
   
   const [participantsData, setParticipantsData] = useState([
-    { name: "Participant 1", items: [{ item_name: "", price: "" }] }
+    { name: "Participant 1", items: [{ item_name: "", price: "" }] },
+    { name: "Participant 2", items: [{ item_name: "", price: "" }] }
   ]);
 
   const handleNameChange = (pIndex, newName) => {
@@ -29,11 +30,29 @@ export default function ManualInputButton() {
     ]);
   };
 
-  const removeParticipant = (pIndex) => {
-    if (participantsData.length > 1) {
-      setParticipantsData(participantsData.filter((_, index) => index !== pIndex));
-    }
-  };
+  const [showDeleteParticipantModal, setShowDeleteParticipantModal] = useState(false);
+
+  const [selectedParticipantIndex, setSelectedParticipantIndex] = useState(null);
+
+  const removeParticipant = () => {
+
+  if (participantsData.length > 1) {
+
+    const updatedParticipants = participantsData
+      .filter((_, index) => index !== selectedParticipantIndex)
+      .map((participant, index) => ({
+        ...participant,
+        name: `Participant ${index + 1}`,
+      }));
+
+    setParticipantsData(updatedParticipants);
+
+  }
+
+  setShowDeleteParticipantModal(false);
+
+  setSelectedParticipantIndex(null);
+};
 
   const addItem = (pIndex) => {
     const newData = [...participantsData];
@@ -64,8 +83,7 @@ export default function ManualInputButton() {
     e.preventDefault();
     setLoading(true);
     const token = localStorage.getItem("token");
-    
-    // Transformasi data agar sesuai dengan ekspektasi backend
+
     const allItems = participantsData.flatMap(p => 
       p.items.map(item => ({
         item_name: item.item_name,
@@ -134,7 +152,10 @@ export default function ManualInputButton() {
                   {participantsData.length > 1 && (
                     <button 
                       type="button"
-                      onClick={() => removeParticipant(pIndex)}
+                      onClick={() => {
+                        setSelectedParticipantIndex(pIndex);
+                        setShowDeleteParticipantModal(true);
+                      }}
                       className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
                     >
                       <Trash2 className="w-5 h-5" />
@@ -215,6 +236,92 @@ export default function ManualInputButton() {
           </form>
         </div>
       )}
+
+      {showDeleteParticipantModal && (
+
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+
+          <div
+            className="
+              bg-white dark:bg-gray-900
+              rounded-3xl
+              w-full max-w-md
+              p-6
+              shadow-2xl
+              border border-gray-200 dark:border-gray-700
+            "
+          >
+
+            <div className="flex items-center gap-4 mb-5">
+
+              <div
+                className="
+                  w-14 h-14
+                  rounded-2xl
+                  bg-red-100 dark:bg-red-900/30
+                  flex items-center justify-center
+                "
+              >
+
+                🗑️
+
+              </div>
+
+              <div>
+
+                <h2 className="text-xl font-bold dark:text-white">
+                  Hapus Participant?
+                </h2>
+
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Semua item participant ini akan ikut terhapus.
+                </p>
+
+              </div>
+
+            </div>
+
+            <div className="flex gap-3 mt-6">
+
+              <button
+                onClick={() =>
+                  setShowDeleteParticipantModal(false)
+                }
+                className="
+                  flex-1 py-3 rounded-2xl
+                  bg-gray-100 dark:bg-gray-800
+                  hover:bg-gray-200 dark:hover:bg-gray-700
+                  transition font-semibold
+                  dark:text-white
+                "
+              >
+
+                Batal
+
+              </button>
+
+              <button
+                onClick={removeParticipant}
+                className="
+                  flex-1 py-3 rounded-2xl
+                  bg-red-500 hover:bg-red-600
+                  text-white font-semibold
+                  transition
+                "
+              >
+
+                Ya, Hapus
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
     </div>
   );
 }

@@ -34,6 +34,7 @@ const GooeyNav = ({
       rotate: rotate > 0 ? (rotate + r / 20) * 10 : (rotate - r / 20) * 10
     };
   };
+
   const makeParticles = element => {
     const d = particleDistances;
     const r = particleR;
@@ -44,6 +45,8 @@ const GooeyNav = ({
       const p = createParticle(i, t, d, r);
       element.classList.remove('active');
       setTimeout(() => {
+        if (!element.classList.contains('js-hovered')) return;
+
         const particle = document.createElement('span');
         const point = document.createElement('span');
         particle.classList.add('particle');
@@ -70,6 +73,7 @@ const GooeyNav = ({
       }, 30);
     }
   };
+
   const updateEffectPosition = element => {
     if (!containerRef.current || !filterRef.current || !textRef.current) return;
     const containerRect = containerRef.current.getBoundingClientRect();
@@ -78,24 +82,29 @@ const GooeyNav = ({
       left: `${pos.x - containerRect.x}px`,
       top: `${pos.y - containerRect.y}px`,
       width: `${pos.width}px`,
-      height: `${pos.height}px`
+      height: `${pos.height}px`,
+      opacity: '1',
+      visibility: 'visible'
     };
     Object.assign(filterRef.current.style, styles);
     Object.assign(textRef.current.style, styles);
     textRef.current.innerText = element.innerText;
   };
+
   const handleClick = (e, index) => {
     const liEl = e.currentTarget;
     if (activeIndex === index) return;
     setActiveIndex(index);
     updateEffectPosition(liEl);
+    
     if (filterRef.current) {
+      filterRef.current.classList.add('js-hovered');
       const particles = filterRef.current.querySelectorAll('.particle');
       particles.forEach(p => {
-      if (filterRef.current?.contains(p)) {
-        filterRef.current.removeChild(p);
-      }
-    });
+        if (filterRef.current?.contains(p)) {
+          filterRef.current.removeChild(p);
+        }
+      });
     }
     if (textRef.current) {
       textRef.current.classList.remove('active');
@@ -106,6 +115,7 @@ const GooeyNav = ({
       makeParticles(filterRef.current);
     }
   };
+
   const handleKeyDown = (e, index) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -115,9 +125,10 @@ const GooeyNav = ({
       }
     }
   };
+
   useEffect(() => {
     if (!navRef.current || !containerRef.current) return;
-    if (activeIndex === null) return;
+    if (activeIndex === null || activeIndex === -1) return;
     const activeLi = navRef.current.querySelectorAll('li')[activeIndex];
     if (activeLi) {
       updateEffectPosition(activeLi);
@@ -142,21 +153,25 @@ const GooeyNav = ({
           }
           .effect {
             position: absolute;
-            opacity: 1;
+            opacity: 0;
+            visibility: hidden;
             pointer-events: none;
             display: grid;
             place-items: center;
-            z-index: 1;
+            z-index: 2; /* Naikkan z-index agar overlay teks kloningan berada di paling atas */
+            transition: opacity 0.2s ease, visibility 0.2s ease;
           }
           .effect.text {
             color: transparent;
-            transition: color 0.3s ease;
+            transition: color 0.2s ease, opacity 0.2s ease;
+            font-weight: 500;
           }
           .effect.text.active {
             color: white;
           }
           .effect.filter {
             mix-blend-mode: normal;
+            z-index: 1; /* Efek lingkaran/partikel warna berada di bawah teks cetakan */
           }
           .effect.filter::before {
             content: "";
@@ -252,7 +267,7 @@ const GooeyNav = ({
             }
           }
           li.active {
-            color: inherit;
+            color: transparent; /* Ubah ke transparent saat aktif agar teks asli di bawah tidak tabrakan/menumpuk ganda */
             text-shadow: none;
           }
           li.active::after {
@@ -278,7 +293,7 @@ const GooeyNav = ({
           style={{ transform: 'translate3d(0,0,0.01px)' }}>
           <ul
             ref={navRef}
-            className="flex gap-8 list-none p-0 px-4 m-0 relative z-[3] text-black dark:text-white"
+            className="flex gap-4 list-none p-0 px-2 m-0 relative z-[3] text-black dark:text-white"
           >
             {items.map((item, index) => (
               <li
@@ -289,14 +304,19 @@ const GooeyNav = ({
 
                   if (filterRef.current) {
                     filterRef.current.classList.remove("active");
+                    filterRef.current.classList.remove("js-hovered");
+                    filterRef.current.style.opacity = '0';
+                    filterRef.current.style.visibility = 'hidden';
                   }
 
                   if (textRef.current) {
                     textRef.current.classList.remove("active");
+                    textRef.current.style.opacity = '0';
+                    textRef.current.style.visibility = 'hidden';
                     textRef.current.innerText = "";
                   }
                 }}
-                className={`rounded-full relative cursor-pointer transition-all duration-300 ease text-black dark:text-white ${
+                className={`rounded-full relative cursor-pointer transition-all duration-200 ease text-black dark:text-white ${
                   activeIndex === index ? "active" : ""
                 }`}
               >
@@ -311,7 +331,7 @@ const GooeyNav = ({
                     }
                   }}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="outline-none py-[0.6em] px-[1em] inline-block text-black dark:text-white"
+                  className="outline-none py-[0.5em] px-[1.2em] inline-block font-medium relative z-[4] text-black dark:text-white transition-colors duration-150"
                 >
                   {item.label}
                 </button>
