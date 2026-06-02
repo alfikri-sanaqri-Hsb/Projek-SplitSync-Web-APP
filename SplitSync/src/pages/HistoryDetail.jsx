@@ -1,32 +1,24 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { ArrowLeft, ReceiptText, QrCode } from "lucide-react";
 import MainLayout from "@/layout/MainLayout";
 import DetailHeader from "@/components/HistoryDetail/DetailHeader";
 import DetailItemCard from "@/components/HistoryDetail/DetailItemCard";
 import DetailFooter from "@/components/HistoryDetail/DetailFooter";
-
 import QrisModal from "@/components/common/QrisModal";
 
 export default function HistoryDetail() {
-
   const { id } = useParams();
-
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
   const [bill, setBill] = useState(null);
-
   const [loading, setLoading] = useState(true);
-
   const [showQrisModal, setShowQrisModal] = useState(false);
 
   const fetchDetail = useCallback(async () => {
-
     const token = localStorage.getItem("token");
-
     try {
-
       const response = await axios.get(
         `http://127.0.0.1:8000/api/bills/${id}`,
         {
@@ -35,29 +27,28 @@ export default function HistoryDetail() {
           }
         }
       );
-
       const billData = response.data.data;
-
       setBill(billData);
-
     } catch (error) {
-
       console.error("Gagal mengambil detail", error);
-
     } finally {
       setLoading(false);
     }
-
   }, [id]);
 
   useEffect(() => {
-
     fetchDetail();
-
   }, [fetchDetail]);
 
-  if (loading) {
+  useEffect(() => {
+    if (bill && searchParams.get("download") === "true") {
+      setTimeout(() => {
+        document.getElementById("download-receipt-btn")?.click();
+      }, 500);
+    }
+  }, [bill, searchParams]);
 
+  if (loading) {
     return (
       <MainLayout>
         <div className="flex justify-center items-center min-h-[60vh]">
@@ -68,7 +59,6 @@ export default function HistoryDetail() {
   }
 
   if (!bill) {
-
     return (
       <MainLayout>
         <div className="text-center py-20 text-gray-500 dark:text-gray-400">
@@ -80,22 +70,20 @@ export default function HistoryDetail() {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto px-4 py-10">
-
+      <div className="max-w-4xl mx-auto px-4 py-10 relative">
+        
         <button
           onClick={() => navigate(-1)}
-          className="
-            flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-8 transition-colors font-medium"
+          className="flex items-center gap-2 text-gray-500 hover:text-indigo-600 mb-8 transition-colors font-medium"
         >
-
           <ArrowLeft className="w-5 h-5" />
           Kembali ke Riwayat
         </button>
 
-        <div className="
-          bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700
-        ">
-
+        <div 
+          id="receipt-card"
+          className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700"
+        >
           <DetailHeader
             title={bill.title}
             date={bill.created_at}
@@ -104,58 +92,40 @@ export default function HistoryDetail() {
           />
 
           <div className="p-8">
-
             <div className="flex justify-between items-center mb-6">
-
-              <h3 className="
-                text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2"
-              >
+              <h3 className="text-lg font-bold text-gray-800 dark:text-white flex items-center gap-2">
                 <ReceiptText className="text-indigo-600 w-5 h-5" />
                 Rincian Tagihan
               </h3>
-
               <p className="text-xs text-gray-400 italic">
                 * Klik ikon status untuk mengubah status bayar
               </p>
-
             </div>
 
             <div className="space-y-4">
-
               {bill.items?.map((item) => (
-
                 <DetailItemCard
                   key={item.id}
                   item={item}
                   onStatusUpdate={fetchDetail}
                 />
-
               ))}
-
             </div>
 
-            <DetailFooter total={bill.total_price} />
+            <DetailFooter
+              total={bill.total_price}
+              bill={bill}
+            />
 
-            <div className="
-              mt-8 border-t border-gray-200 dark:border-gray-700 pt-6"
-            >
-
-              <div className="
-                flex flex-col md:flex-row md:items-center md:justify-between gap-4"
-              >
-
+            <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-
-                  <h3 className="
-                    text-lg font-bold text-gray-800 dark:text-white"
-                  >
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white">
                     Pembayaran QRIS
                   </h3>
-
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Scan QRIS untuk membayar tagihan dengan cepat
                   </p>
-
                 </div>
 
                 <button
@@ -170,16 +140,49 @@ export default function HistoryDetail() {
                     }
                   `}
                 >
-
                   <QrCode size={18} />
-
-                  {bill?.user?.qris
-                    ? "Lihat QRIS"
-                    : "QRIS Belum Tersedia"}
-
+                  {bill?.user?.qris ? "Lihat QRIS" : "QRIS Belum Tersedia"}
                 </button>
-
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute top-0 left-0 opacity-0 pointer-events-none" style={{ zIndex: -1 }}>
+          <div 
+            id="hidden-receipt-download" 
+            className="p-10 bg-white" 
+            style={{ width: "450px", color: "#000000", fontFamily: "Arial, sans-serif" }}
+          >
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold uppercase text-black m-0" style={{ color: '#000000' }}>
+                {bill.title}
+              </h2>
+              <p className="text-xs text-gray-600 mt-1">
+                {new Date(bill.created_at).toLocaleString("id-ID")}
+              </p>
+            </div>
+            
+            <div className="border-t-2 border-dashed border-black my-4"></div>
+            
+            <div className="space-y-3">
+              {bill.items?.map((item, idx) => (
+                <div key={idx} className="flex justify-between text-sm text-black" style={{ color: '#000000' }}>
+                  <span className="font-medium">{item.item_name}</span>
+                  <span>Rp {Number(item.price).toLocaleString("id-ID")}</span>
+                </div>
+              ))}
+            </div>
+            
+            <div className="border-t-2 border-dashed border-black my-4"></div>
+            
+            <div className="flex justify-between text-lg font-bold text-black" style={{ color: '#000000' }}>
+              <span>TOTAL</span>
+              <span>Rp {Number(bill.total_price).toLocaleString("id-ID")}</span>
+            </div>
+
+            <div className="text-center text-xs text-gray-500 mt-8 italic">
+              * Terima Kasih Telah Menggunakan SplitSync *
             </div>
           </div>
         </div>

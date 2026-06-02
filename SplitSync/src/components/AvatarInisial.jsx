@@ -1,13 +1,9 @@
 export default function AvatarInisial({ name }) {
-  // Ambil huruf pertama dan ubah ke huruf besar (Capital)
-  // Jika name kosong, default ke huruf 'U' (User)
-  const initial = name ? name.charAt(0).toUpperCase() : "U";
 
-  // Fungsi untuk menentukan warna background lingkaran berdasarkan huruf agar bervariasi
+  const initial = name ? name.charAt(0).toUpperCase() : "U";
   const getBackgroundColor = (char) => {
     const charCode = char.charCodeAt(0);
-    
-    // Daftar pilihan warna desaturasi/lembut khas Google (Tailwind Classes)
+
     const colors = [
       "bg-red-600 text-white",
       "bg-green-600 text-white",
@@ -18,8 +14,7 @@ export default function AvatarInisial({ name }) {
       "bg-teal-600 text-white",
       "bg-indigo-600 text-white"
     ];
-    
-    // Tentukan warna acak tapi konsisten berdasarkan kode huruf
+
     return colors[charCode % colors.length];
   };
 

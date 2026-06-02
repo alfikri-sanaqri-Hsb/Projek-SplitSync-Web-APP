@@ -5,7 +5,7 @@ export default function Hero() {
   const navigate = useNavigate();
   return (
     <section className="bg-gray-100 dark:bg-gray-800 py-12 md:py-20 px-4">   
-      <div className="mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
+      <div className="max-w-8xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10">
         
         <div className="flex-1 text-center md:text-left">  
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 leading-tight text-gray-800 dark:text-white">
@@ -16,11 +16,11 @@ export default function Hero() {
           </p>
         </div>
 
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 flex justify-center md:justify-end">
           <img
             src={Illustration}
             alt="SplitSync Illustration"
-            className="w-full max-w-xs md:max-w-md max-h-[400px] object-contain rounded-[10px]"
+            className="w-full max-w-xs md:max-w-md max-h-[400px] object-contain rounded-[30px] shadow-sm"
           />
         </div>
       </div>

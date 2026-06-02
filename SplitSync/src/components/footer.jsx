@@ -1,52 +1,114 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/assets/logo.png";
 
 export default function Footer() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, [location]);
+
+  const handleScrollToSection = (sectionId) => {
+    if (location.pathname === "/" || location.pathname === "/home") {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 300);
+    }
+  };
+
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-10">
-      
-      <div className="mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
 
         <div>
           <div className="flex items-center gap-3 mb-3">
             <img
               src={Logo}
               alt="logo"
-              className="w-10 h-10 rounded-xl object-cover border-blue-500 border-white"
+              className="w-10 h-10 rounded-xl object-cover"
             />
-            <h2 className="text-xl font-bold text-black-500">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
               SplitSync
             </h2>
           </div>
-
-          <p className="text-sm leading-relaxed">
+          <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400">
             Split bill jadi cepat tanpa hitung manual. Upload atau scan struk,
             bagi menu ke teman, dan lihat siapa sudah bayar secara realtime.
           </p>
         </div>
 
-        <div>
-          <h3 className="font-semibold mb-3 text-black-500">About</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-teal-500 transition cursor-pointer">About SplitSync</li>
-            <li className="hover:text-teal-500 transition cursor-pointer">Contact</li>
-            <li className="hover:text-teal-500 transition cursor-pointer">Privacy Policy</li>
-          </ul>
-        </div>
+        {!isLoggedIn ? (
+          <div>
+            <h3 className="font-semibold mb-3 text-gray-900 dark:text-white">About</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <button 
+                  onClick={() => handleScrollToSection("hero-section")} 
+                  className="hover:text-teal-500 transition text-left block w-full cursor-pointer"
+                >
+                  About SplitSync
+                </button>
+              </li>
+              
+              <li>
+                <button 
+                  onClick={() => handleScrollToSection("why-choose-us-section")} 
+                  className="hover:text-teal-500 transition text-left block w-full cursor-pointer"
+                >
+                  Why Choose SplitSync
+                </button>
+              </li>
 
-        <div>
-          <h3 className="font-semibold mb-3 text-black-500">Features</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-teal-500 transition cursor-pointer">Scan Receipt</li>
-            <li className="hover:text-teal-500 transition cursor-pointer">Assign Items</li>
-            <li className="hover:text-teal-500 transition cursor-pointer">Track Payment</li>
-            <li className="hover:text-teal-500 transition cursor-pointer">History</li>
-          </ul>
-        </div>
+              <li>
+                <button 
+                  onClick={() => handleScrollToSection("how-it-works-section")} 
+                  className="hover:text-teal-500 transition text-left block w-full cursor-pointer"
+                >
+                  How It Works
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <div>
+            <h3 className="font-semibold mb-3 text-gray-900 dark:text-white">Features</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link to="/upload-receipt" className="hover:text-teal-500 transition block">
+                  Scan Receipt
+                </Link>
+              </li>
+              <li>
+                <Link to="/desktop" className="hover:text-teal-500 transition block">
+                  Assign Items
+                </Link>
+              </li>
+              <li>
+                <Link to="/history" className="hover:text-teal-500 transition block">
+                  Track Payment & History
+                </Link>
+              </li>
+            </ul>
+          </div>
+        )}
 
       </div>
 
       <div className="border-t border-gray-300 dark:border-gray-700">
-        <p className="text-center text-sm text-black-500 py-4">
+        <p className="text-center text-sm text-gray-500 dark:text-gray-400 py-4">
           © 2026 SplitSync. All rights reserved.
         </p>
       </div>

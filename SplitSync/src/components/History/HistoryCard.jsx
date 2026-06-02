@@ -1,8 +1,10 @@
 import { Calendar, Users, Eye, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { downloadReceipt } from "@/components/Common/downloadReceipt";
 
 export default function HistoryCard({ bill }) {
   const navigate = useNavigate();
+  
   const formatRupiah = (number) => {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -11,8 +13,15 @@ export default function HistoryCard({ bill }) {
     }).format(number);
   };
 
+  const handleDownloadFromHistory = async (e) => {
+    e.stopPropagation();
+
+    const elementId = `hidden-receipt-card-${bill.id}`;
+    await downloadReceipt(elementId, bill.title || "Struk-Tagihan");
+  };
+
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between mb-4">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex items-center justify-between mb-4 relative">
       <div className="flex items-center gap-5">
         <div className="bg-indigo-50 dark:bg-indigo-900/30 p-4 rounded-xl text-indigo-600">
           <span className="text-2xl font-bold">🧾</span>
@@ -37,15 +46,64 @@ export default function HistoryCard({ bill }) {
         </div>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 z-10">
         <button 
           onClick={() => navigate(`/history/${bill.id}`)}
           className="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-gray-700 dark:text-white">
           <Eye className="w-4 h-4" /> View Details
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-gray-700 dark:text-white">
+        
+        <button 
+          onClick={handleDownloadFromHistory}
+          className="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all text-gray-700 dark:text-white">
           <Download className="w-4 h-4" /> Download
         </button>
+      </div>
+
+      <div className="absolute top-0 left-0 opacity-0 pointer-events-none" style={{ zIndex: -1 }}>
+        <div 
+          id={`hidden-receipt-card-${bill.id}`} 
+          className="p-10 bg-white" 
+          style={{ width: "450px", color: "#000000", fontFamily: "Arial, sans-serif" }}
+        >
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold uppercase text-black m-0" style={{ color: '#000000' }}>
+              {bill.title}
+            </h2>
+            <p className="text-xs text-gray-600 mt-1">
+              {new Date(bill.created_at).toLocaleString("id-ID")}
+            </p>
+          </div>
+          
+          <div className="border-t-2 border-dashed border-black my-4"></div>
+          
+          <div className="space-y-3">
+            {Array.isArray(bill?.items) && bill.items.length > 0 ? (
+              bill.items.map((item, idx) => (
+                <div key={idx} className="flex justify-between text-sm text-black" style={{ color: '#000000' }}>
+                  <span className="font-medium">{item.item_name}</span>
+                  <span>Rp {Number(item.price).toLocaleString("id-ID")}</span>
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-between text-sm text-gray-500 italic" style={{ color: '#666666' }}>
+                <span>Deskripsi Item</span>
+                <span>Terlampir di Detail</span>
+              </div>
+            )}
+          </div>
+          
+          <div className="border-t-2 border-dashed border-black my-4"></div>
+          
+          <div className="flex justify-between text-lg font-bold text-black" style={{ color: '#000000' }}>
+            <span>TOTAL</span>
+            <span>Rp {Number(bill.total_price).toLocaleString("id-ID")}</span>
+          </div>
+
+          <div className="text-center text-xs text-gray-500 mt-8 italic">
+            * Terima Kasih Telah Menggunakan SplitSync *
+          </div>
+        </div>
       </div>
     </div>
   );

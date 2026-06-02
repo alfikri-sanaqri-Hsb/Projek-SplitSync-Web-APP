@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -10,33 +9,17 @@ import Settings from "@/pages/Settings";
 import StartAsHost from "@/pages/StartAsHost";
 import UploadReceipt from "@/pages/UploadReceipt";
 import ReceiptResult from "@/pages/ReceiptResult";
-
 import ProtectedRoute from "@/components/ProtectedRoute";
-
 import NotFound from "@/pages/NotFound";
 
 function App() {
-
   return (
     <BrowserRouter>
-
       <Routes>
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/register"
-          element={<Register />}
-        />
-
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         <Route
           path="/desktop"
@@ -46,7 +29,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/startashost"
           element={
@@ -55,7 +37,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/history"
           element={
@@ -64,7 +45,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/history/:id"
           element={
@@ -73,7 +53,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/settings"
           element={
@@ -82,7 +61,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/upload-receipt"
           element={
@@ -91,7 +69,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/receipt-result"
           element={
@@ -101,13 +78,8 @@ function App() {
           }
         />
 
-        <Route
-          path="*"
-          element={<NotFound />}
-        />
-
+        <Route path="*" element={<NotFound />} />
       </Routes>
-
     </BrowserRouter>
   );
 }
