@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import MainLayout from "@/layout/MainLayout";
 import HistoryCard from "@/components/History/HistoryCard";
@@ -18,28 +19,45 @@ const EmptyState = () => (
     </p>
   </div>
 );
+
 export default function History() {
+  const [searchParams] = useSearchParams();
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("All Time");
 
+  const fetchHistory = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/bills", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setBills(response.data.data);
+    } catch (error) {
+      console.error("Error fetching history", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchHistory = async () => {
-      const token = localStorage.getItem("token");
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/api/bills", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setBills(response.data.data);
-      } catch (error) {
-        console.error("Error fetching history", error);
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchHistory();
   }, []);
+
+  useEffect(() => {
+    if (!loading && bills.length > 0 && searchParams.get("download") === "true") {
+      const targetId = searchParams.get("id");
+      
+      setTimeout(() => {
+        if (targetId) {
+          document.getElementById(`download-btn-${targetId}`)?.click();
+        } else {
+          document.getElementById("download-receipt-btn")?.click();
+        }
+      }, 500);
+    }
+  }, [bills, loading, searchParams]);
 
   const filteredBills = useMemo(() => {
     return bills.filter((bill) => {
@@ -52,7 +70,8 @@ export default function History() {
         matchesDate = billDate.toDateString() === now.toDateString();
       } else if (activeFilter === "This Week") {
         const tempDate = new Date();
-        const startOfWeek = new Date(tempDate.setDate(tempDate.getDate() - tempDate.getDay())); matchesDate = billDate >= startOfWeek;
+        const startOfWeek = new Date(tempDate.setDate(tempDate.getDate() - tempDate.getDay())); 
+        matchesDate = billDate >= startOfWeek;
       } else if (activeFilter === "This Month") {
         matchesDate = billDate.getMonth() === now.getMonth() && billDate.getFullYear() === now.getFullYear();
       }
@@ -100,7 +119,13 @@ export default function History() {
             <p className="text-center text-gray-500 mt-4">Memuat riwayat transaksi...</p>
           </div>
         ) : filteredBills.length > 0 ? (
-          filteredBills.map((bill) => <HistoryCard key={bill.id} bill={bill} />)
+          filteredBills.map((bill) => (
+            <HistoryCard 
+              key={bill.id} 
+              bill={bill} 
+              onRefresh={fetchHistory} 
+            />
+          ))
         ) : (
           <EmptyState />
         )}
