@@ -40,13 +40,10 @@ export default function Footer() {
               alt="logo"
               className="w-10 h-10 rounded-xl object-cover"
             />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-              SplitSync
-            </h2>
+            <h2 className="font-split text-2xl"> <span className="text-[blue]">Split</span>Sync</h2>
           </div>
           <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400">
-            Split bill jadi cepat tanpa hitung manual. Upload atau scan struk,
-            bagi menu ke teman, dan lihat siapa sudah bayar secara realtime.
+            Split bills instantly without manual calculations. Upload or scan receipts, assign items to friends, and track payments in real time.
           </p>
         </div>
 

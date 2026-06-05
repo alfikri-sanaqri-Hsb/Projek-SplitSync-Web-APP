@@ -23,11 +23,11 @@ export default function Features() {
     <section className="py-16 px-4">
       <div className="max-w-7xl mx-auto bg-gray-100 dark:bg-gray-400 rounded-[40px] p-10 md:p-16 text-center shadow-xl">
 
-        <h2 className="text-3xl md:text-5xl font-serif mb-4 text-gray-900">
+        <h2 className="text-3xl md:text-5xl font-split mb-4 text-gray-900">
           Why Choose SplitSync?
         </h2>
 
-        <p className="text-lg md:text-xl text-gray-800 mb-12">
+        <p className="text-lg md:text-xl font-split text-gray-800 mb-12">
           Make splitting bills easier than ever before
         </p>
 
@@ -44,7 +44,7 @@ export default function Features() {
                 </div>
               </div>
 
-              <h3 className="font-bold text-black text-2xl mb-3">
+              <h3 className="font-split text-black text-2xl mb-3">
                 {item.title}
               </h3>
 

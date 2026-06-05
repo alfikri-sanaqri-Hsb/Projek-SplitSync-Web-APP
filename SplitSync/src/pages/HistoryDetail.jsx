@@ -97,9 +97,14 @@ export default function HistoryDetail() {
                 <ReceiptText className="text-indigo-600 w-5 h-5" />
                 Rincian Tagihan
               </h3>
-              <p className="text-xs text-gray-400 italic">
-                * Klik ikon status untuk mengubah status bayar
-              </p>
+              <ul>
+                <p className="text-xs text-black italic">
+                  * Klik ikon status untuk mengubah status bayar
+                </p>
+                <p className="text-xs text-black italic">
+                  * Tanpa PPN atau Diskon
+                </p>
+              </ul>
             </div>
 
             <div className="space-y-4">
@@ -147,45 +152,6 @@ export default function HistoryDetail() {
             </div>
           </div>
         </div>
-
-        <div className="absolute top-0 left-0 opacity-0 pointer-events-none" style={{ zIndex: -1 }}>
-          <div 
-            id="hidden-receipt-download" 
-            className="p-10 bg-white" 
-            style={{ width: "450px", color: "#000000", fontFamily: "Arial, sans-serif" }}
-          >
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold uppercase text-black m-0" style={{ color: '#000000' }}>
-                {bill.title}
-              </h2>
-              <p className="text-xs text-gray-600 mt-1">
-                {new Date(bill.created_at).toLocaleString("id-ID")}
-              </p>
-            </div>
-            
-            <div className="border-t-2 border-dashed border-black my-4"></div>
-            
-            <div className="space-y-3">
-              {bill.items?.map((item, idx) => (
-                <div key={idx} className="flex justify-between text-sm text-black" style={{ color: '#000000' }}>
-                  <span className="font-medium">{item.item_name}</span>
-                  <span>Rp {Number(item.price).toLocaleString("id-ID")}</span>
-                </div>
-              ))}
-            </div>
-            
-            <div className="border-t-2 border-dashed border-black my-4"></div>
-            
-            <div className="flex justify-between text-lg font-bold text-black" style={{ color: '#000000' }}>
-              <span>TOTAL</span>
-              <span>Rp {Number(bill.total_price).toLocaleString("id-ID")}</span>
-            </div>
-
-            <div className="text-center text-xs text-gray-500 mt-8 italic">
-              * Terima Kasih Telah Menggunakan SplitSync *
-            </div>
-          </div>
-        </div>
       </div>
 
       <QrisModal
@@ -193,6 +159,57 @@ export default function HistoryDetail() {
         onClose={() => setShowQrisModal(false)}
         qris={bill?.user?.qris}
       />
+
+      <div className="absolute top-0 left-0 opacity-0 pointer-events-none" style={{ zIndex: -1 }}>
+        <div 
+          id="hidden-receipt-download" 
+          className="p-10 bg-white" 
+          style={{ width: "450px", color: "#000000", fontFamily: "Arial, sans-serif" }}
+        >
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold uppercase text-black m-0" style={{ color: '#000000', fontFamily: 'Arial, sans-serif' }}>
+              {bill.title}
+            </h2>
+            <p className="text-xs text-gray-600 mt-1" style={{ fontFamily: 'Arial, sans-serif' }}>
+              {new Date(bill.created_at).toLocaleString("id-ID")}
+            </p>
+          </div>
+          
+          <div className="border-t-2 border-dashed border-black my-4"></div>
+          
+          <div className="space-y-3">
+            {bill.items?.map((item, idx) => {
+              const namaPemesan = item.participant_name;
+
+              return (
+                <div key={idx} className="flex flex-col text-black" style={{ color: '#000000', fontFamily: 'Arial, sans-serif' }}>
+                  <div className="flex justify-between text-sm">
+                    <span className="font-medium">{item.item_name}</span>
+                    <span>Rp {Number(item.price).toLocaleString("id-ID")}</span>
+                  </div>
+
+                  {namaPemesan && (
+                    <span className="text-xs text-gray-400 italic text-left mt-0.5" style={{ color: '#161719', fontFamily: 'Arial, sans-serif' }}>
+                      Dipesan oleh: {namaPemesan}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          
+          <div className="border-t-2 border-dashed border-black my-4"></div>
+          
+          <div className="flex justify-between text-lg font-bold text-black" style={{ color: '#000000', fontFamily: 'Arial, sans-serif' }}>
+            <span>TOTAL</span>
+            <span>Rp {Number(bill.total_price).toLocaleString("id-ID")}</span>
+          </div>
+
+          <div className="text-center text-xs text-gray-500 mt-8 italic" style={{ fontFamily: 'Arial, sans-serif' }}>
+            * Terima Kasih Telah Menggunakan SplitSync *
+          </div>
+        </div>
+      </div>
     </MainLayout>
   );
 }

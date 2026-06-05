@@ -182,7 +182,7 @@ export default function Settings() {
                       type="file"
                       accept="image/*"
                       onChange={(e) => setNewQris(e.target.files[0])}
-                      className="w-full bg-white dark:bg-gray-900 text-sm border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2"
+                      className="w-full bg-white dark:bg-gray-700 text-sm text-black dark:text-white border border-gray-300 dark:border-gray-700 rounded-xl px-3 py-2"
                     />
                     <button
                       onClick={handleUpdateQris}

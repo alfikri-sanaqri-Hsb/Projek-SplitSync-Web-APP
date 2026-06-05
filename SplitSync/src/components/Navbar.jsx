@@ -1,7 +1,7 @@
 import GooeyNav from "@/components/GooeyNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.png";
-import { Moon, Sun, Bell } from "lucide-react"; 
+import { Moon, Sun} from "lucide-react"; 
 import { useDarkMode } from "@/hooks/DarkMode";
 
 export default function Navbar() {
@@ -101,7 +101,7 @@ export default function Navbar() {
             src={Logo} 
             alt="logo" 
             className="w-10 h-10 rounded-xl border-2 border-blue-500 object-cover" />
-          <h2 className="font-bold text-2xl">SplitSync</h2>
+          <h2 className="font-split text-2xl"> <span className="text-[blue]">Split</span>Sync</h2>
         </div>
 
         <div className="flex items-center gap-4 text-xl">

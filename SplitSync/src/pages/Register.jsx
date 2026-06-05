@@ -110,7 +110,7 @@ export default function Register() {
                         />
                     </div>
 
-                    <h2 className="text-black dark:text-white text-2xl font-bold mb-2 text-center">
+                    <h2 className="text-black dark:text-white text-2xl font-split mb-2 text-center">
                         Create Account
                     </h2>
 

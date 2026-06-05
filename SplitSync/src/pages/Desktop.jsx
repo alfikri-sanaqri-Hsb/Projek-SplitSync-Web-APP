@@ -3,7 +3,6 @@ import MainLayout from "@/layout/MainLayout";
 import StartAsHostCard from "@/components/desktop/StartAsHostCard";
 import ContinueSession from "@/components/desktop/ContinueSession";
 
-// IMPORT 3 FOTO KAMU
 import DesktopIllustration1 from "@/assets/hero.png"; 
 import DesktopIllustration2 from "@/assets/hero1.png"; 
 import DesktopIllustration3 from "@/assets/hero2.png"; 
@@ -17,27 +16,24 @@ export default function Desktop() {
     DesktopIllustration3
   ];
 
-  // Fungsi untuk navigasi ke slide berikutnya (Kanan)
   const nextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
   };
 
-  // Fungsi untuk navigasi ke slide sebelumnya (Kiri)
   const prevSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide - 1 + slides.length) % slides.length);
   };
 
-  // Auto-play slider otomatis berganti setiap 4 detik
   useEffect(() => {
     const timer = setInterval(nextSlide, 4000);
     return () => clearInterval(timer); 
-  }, [currentSlide]); // Dependency dikaitkan ke currentSlide agar timer mereset ulang jika user menekan tombol manual
+  }, [currentSlide]); 
 
   return (
     <MainLayout>
-      <div className="min-h-[80vh] flex flex-col items-center px-4 py-12">
+      <div className="min-h-[80vh] flex flex-col  items-center px-4 py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-split text-gray-900 dark:text-white mb-4 tracking-tight">
             Start Your Split Session
           </h1>
           <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400">
@@ -51,11 +47,9 @@ export default function Desktop() {
 
         <ContinueSession onSecondaryClick={() => console.log("Viewing Session...")} />
 
-        {/* ==================== CAROUSEL SLIDER AREA ==================== */}
         <div className="w-full max-w-5xl mt-20">
           <div className="relative overflow-hidden rounded-[32px] shadow-lg group">
             
-            {/* Wadah Gambar Slide */}
             <div className="relative h-[300px] sm:h-[450px] md:h-[600px] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
               {slides.map((slide, index) => (
                 <img
@@ -69,7 +63,6 @@ export default function Desktop() {
               ))}
             </div>
 
-            {/* TOMBOL BACK / PANAH KIRI (<) */}
             <button
               onClick={prevSlide}
               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
@@ -80,7 +73,6 @@ export default function Desktop() {
               </svg>
             </button>
 
-            {/* TOMBOL NEXT / PANAH KANAN (>) */}
             <button
               onClick={nextSlide}
               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 h-12 w-12 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/50 text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100"
@@ -91,7 +83,6 @@ export default function Desktop() {
               </svg>
             </button>
 
-            {/* Bulat Indikator (Dots) Shopee di bawah tengah */}
             <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3 z-20 bg-black/20 backdrop-blur-sm px-4 py-2 rounded-full opacity-80 group-hover:opacity-100 transition-opacity">
               {slides.map((_, index) => (
                 <button
@@ -109,7 +100,6 @@ export default function Desktop() {
 
           </div>
         </div>
-        {/* ============================================================== */}
 
       </div>
     </MainLayout>

@@ -2,7 +2,7 @@ export default function PageHeader() {
   return (
     <div className="text-center mb-14">
 
-      <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+      <h1 className="text-4xl md:text-6xl font-split text-gray-900 dark:text-white mb-4">
         Upload Your Receipt
       </h1>
 

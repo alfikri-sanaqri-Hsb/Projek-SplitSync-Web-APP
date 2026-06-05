@@ -88,7 +88,7 @@ export default function Login() {
             />
           </div>
 
-          <h2 className="text-black dark:text-white text-2xl font-bold mb-2 text-center">
+          <h2 className="text-black dark:text-white text-2xl font-split mb-2 text-center">
             Welcome Back
           </h2>
 

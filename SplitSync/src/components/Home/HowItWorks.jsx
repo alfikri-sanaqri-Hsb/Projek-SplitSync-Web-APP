@@ -1,8 +1,6 @@
 import { Camera, MousePointer2, ReceiptText } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export default function HowItWorks() {
-  const navigate = useNavigate();
   const steps = [
     {
       title: "Upload receipt",
@@ -25,10 +23,10 @@ export default function HowItWorks() {
     <section className="py-20 bg-white dark:bg-gray-800">
       <div className="mx-auto px-4 text-center">
         
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+        <h2 className="text-3xl md:text-4xl font-split text-gray-900 dark:text-white mb-2">
           How It Works
         </h2>
-        <p className="text-xl text-gray-600 dark:text-gray-400 mb-16">
+        <p className="text-xl text-gray-600 font-split dark:text-gray-400 mb-16">
           Three simple steps to split your bill
         </p>
 
@@ -39,7 +37,7 @@ export default function HowItWorks() {
                 {step.icon}
               </div>
               
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+              <h3 className="text-xl font-split text-gray-900 dark:text-white mb-3">
                 {step.title}
               </h3>
               <p className="text-gray-600 dark:text-gray-400 max-w-[250px]">
@@ -48,12 +46,6 @@ export default function HowItWorks() {
             </div>
           ))}
         </div>
-
-        <button
-          onClick={() => navigate("/login")}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-10 py-4 rounded-2xl text-lg font-semibold shadow-blue-500/50 transition-all transform hover:-translate-y-1">
-          Get Started Now
-        </button>
 
       </div>
     </section>

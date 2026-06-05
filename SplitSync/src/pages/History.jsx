@@ -64,7 +64,7 @@ export default function History() {
   return (
     <MainLayout>
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <h1 className="text-4xl font-black text-gray-900 dark:text-white mb-2">Transaction History</h1>
+        <h1 className="text-5xl font-split text-gray-900 dark:text-white mb-2">Transaction History</h1>
         <p className="text-gray-500 mb-8">View and manage all your split bill transactions</p>
 
         <div className="relative mb-6">

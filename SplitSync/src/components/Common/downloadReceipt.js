@@ -12,7 +12,9 @@ export const downloadReceipt = async (elementId, filename = "receipt") => {
     const dataUrl = await toPng(element, {
       cacheBust: true,
       pixelRatio: 3,
-      backgroundColor: "#ffffff",
+      backgroundColor: "#c4c2c2",
+      fontEmbedCSS: "",
+      skipFonts: true,
       style: {
         transform: "scale(1)",
         visibility: "visible",
