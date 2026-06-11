@@ -1,13 +1,11 @@
 import GooeyNav from "@/components/GooeyNav";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.png";
-import { Moon, Sun} from "lucide-react"; 
-import { useDarkMode } from "@/hooks/DarkMode";
+import { HelpCircle } from "lucide-react";
 
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { isDarkMode, setIsDarkMode } = useDarkMode();
   const token = localStorage.getItem("token");
 
   const isLoginPage = location.pathname === "/login";
@@ -90,6 +88,19 @@ export default function Navbar() {
     return colors[charCode % colors.length];
   };
 
+  const handleScrollToHowItWorks = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const element = document.getElementById("how-it-works");
+        element?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    } else {
+      const element = document.getElementById("how-it-works");
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 text-black dark:text-white shadow-lg w-full overflow-hidden">
       <div className="mx-auto px-4 md:px-6 py-4 flex justify-between items-center">
@@ -110,19 +121,12 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
 
             {!userBenarSudahLogin && (
-              <>
-                {isDarkMode ? (
-                  <Sun 
-                    size={20} 
-                    className="cursor-pointer hover:text-yellow-400 transition-colors" 
-                    onClick={() => setIsDarkMode(false)} />
-                ) : (
-                  <Moon 
-                    size={20} 
-                    className="cursor-pointer hover:text-blue-500 transition-colors" 
-                    onClick={() => setIsDarkMode(true)} />
-                )}
-              </>
+              <HelpCircle 
+                size={25} 
+                className="cursor-pointer text-gray-500 hover:text-blue-500 transition-colors" 
+                title="Cara Penggunaan"
+                onClick={handleScrollToHowItWorks}
+              />
             )}
 
             {userBenarSudahLogin ? (
