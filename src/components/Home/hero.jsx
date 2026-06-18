@@ -36,11 +36,11 @@ export default function Hero() {
         </div>
 
         <div className="flex-1 flex justify-center md:justify-end w-full">
-          <div className="animate-float w-full max-w-xs md:max-w-md flex justify-center">
+          <div className="animate-float w-full max-w-[240px] md:max-w-md flex justify-center">
             <img
               src={Illustration}
               alt="SplitSync Illustration"
-              className="w-full h-auto max-h-[450px] object-contain mix-blend-multiply dark:mix-blend-normal"
+              className="w-full h-auto max-h-[250px] md:max-h-[450px] object-contain mix-blend-multiply dark:mix-blend-normal"
             />
           </div>
         </div>
