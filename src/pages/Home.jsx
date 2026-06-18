@@ -11,7 +11,7 @@ export default function Home() {
         <Hero />
       </div>
 
-      <div id="why-choose-us-section">
+      <div id="why-choose-us-section" className="-mt-32 md:mt-0 bg-white dark:bg-gray-800 relative z-10">
         <Features />
       </div>
 
