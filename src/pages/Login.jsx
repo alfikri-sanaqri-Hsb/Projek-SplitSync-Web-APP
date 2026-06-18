@@ -4,8 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import MainLayout from "@/layout/MainLayout";
 import { Mail, Lock } from "lucide-react";
 import Logo from "@/assets/logo.png";
-import LoadingSpinner from "@/components/Common/LoadingSpinner";
-import Toast from "@/components/common/toast";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import Toast from "@/components/common/Toast";
 
 export default function Login() {
 

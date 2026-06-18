@@ -2,7 +2,7 @@ import { Calendar, Users, Eye, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { downloadReceipt } from "@/components/Common/downloadReceipt";
+import { downloadReceipt } from "@/components/common/downloadReceipt";
 
 export default function HistoryCard({ bill }) {
   const navigate = useNavigate();

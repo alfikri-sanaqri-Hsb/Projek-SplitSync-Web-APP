@@ -1,4 +1,4 @@
-import { downloadReceipt } from "@/components/Common/downloadReceipt";
+import { downloadReceipt } from "@/components/common/downloadReceipt";
 
 export default function DetailFooter({ total, bill }) {
   const formatRupiah = (number) => {

@@ -4,7 +4,7 @@ import axios from "axios";
 import MainLayout from "@/layout/MainLayout";
 import HistoryCard from "@/components/History/HistoryCard";
 import { Search } from "lucide-react";
-import LoadingSpinner from "@/components/Common/LoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const EmptyState = () => (
   <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in zoom-in duration-300">

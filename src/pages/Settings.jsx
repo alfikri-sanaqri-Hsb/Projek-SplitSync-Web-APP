@@ -5,8 +5,8 @@ import MainLayout from "@/layout/MainLayout";
 import SettingsCard from "@/components/settings/SettingsCard";
 import ToggleItem from "@/components/settings/ToggleItem";
 import AppearanceSection from "@/components/settings/AppearanceSection";
-import Toast from "@/components/common/toast";
-import LoadingSpinner from "@/components/Common/LoadingSpinner";
+import Toast from "@/components/common/Toast";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 import {
   User,
