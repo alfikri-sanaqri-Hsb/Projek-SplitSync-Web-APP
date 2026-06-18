@@ -5,7 +5,7 @@ import { Zap } from "lucide-react";
 export default function Hero() {
   const navigate = useNavigate();
   return (
-    <section className="bg-white dark:bg-gray-700 py-12 md:py-20 px-4 min-h-[80vh] flex items-center">   
+    <section className="bg-white dark:bg-gray-700 py-16 md:py-20 px-4 md:min-h-[80vh] flex items-center">   
       <div className="max-w-8xl mx-auto flex flex-col-reverse md:flex-row items-center gap-10 w-full">
         <div className="flex-1 text-center md:text-left">
        
