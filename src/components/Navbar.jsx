@@ -116,10 +116,24 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-4 text-xl">
-          <GooeyNav items={items} />
+          
+          <div className="hidden md:block">
+            <GooeyNav items={items} />
+          </div>
+
+          <div className="block md:hidden text-sm font-medium mr-1">
+            {items.map((item, idx) => (
+              <button 
+                key={idx} 
+                onClick={item.onClick} 
+                className="text-gray-700 dark:text-gray-200 hover:text-blue-600 font-sans px-2 py-1"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
           
           <div className="flex items-center gap-3">
-
             {!userBenarSudahLogin && (
               <HelpCircle 
                 size={25} 
